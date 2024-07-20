@@ -2,15 +2,13 @@ package com.DigitalMoneyHouse.msvc_users.controller;
 
 
 import com.DigitalMoneyHouse.msvc_users.dto.UserDTO;
+import com.DigitalMoneyHouse.msvc_users.dto.UserRegisteredResponseDTO;
 import com.DigitalMoneyHouse.msvc_users.entity.User;
 import com.DigitalMoneyHouse.msvc_users.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -22,9 +20,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
-    public ResponseEntity<UserDTO> createUser(@Validated @RequestBody UserDTO userDTO) {
-        UserDTO createdUser = userService.createUser(userDTO);
+    @PostMapping("/create")
+    public ResponseEntity<UserRegisteredResponseDTO> createUser(@Validated @RequestBody UserDTO userDTO) {
+        UserRegisteredResponseDTO createdUser = userService.createUser(userDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
@@ -37,8 +35,10 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @GetMapping("/email")
-    public ResponseEntity<UserDTO> getUserByEmail(@RequestParam String email) {
+    //@GetMapping("/email/{email}")
+   @GetMapping("/email")
+   public ResponseEntity<UserDTO> getUserByEmail(@RequestParam String email) {
+//        public ResponseEntity<UserDTO> getUserByEmail(  @PathVariable String email) {
         UserDTO userDTO = userService.getUserByEmail(email);
         if (userDTO != null) {
             return ResponseEntity.ok(userDTO);

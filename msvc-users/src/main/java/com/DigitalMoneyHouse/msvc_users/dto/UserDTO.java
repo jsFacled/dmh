@@ -4,13 +4,20 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Email;
+import lombok.Data;
 
+@Data
 public class UserDTO {
-        private Long id;
+
+private Long id;
 
         @NotBlank(message = "Name is mandatory")
         @Size(max = 100, message = "Name can have at most 100 characters")
-        private String name;
+        private String firstName;
+        @NotBlank(message = "Name is mandatory")
+        @Size(max = 100, message = "Name can have at most 100 characters")
+        private String lastName;
+
 
         @NotBlank(message = "DNI is mandatory")
         @Pattern(regexp = "\\d+", message = "DNI must be numeric")
@@ -28,7 +35,7 @@ public class UserDTO {
         private String phone;
 
         @NotBlank(message = "Password is mandatory")
-        @Size(min = 6, message = "Password must be at least 6 characters long")
+        //@Size(min = 6, message = "Password must be at least 6 characters long")
         private String password;
 
 

@@ -1,21 +1,26 @@
 package com.DigitalMoneyHouse.msvc_users.service;
 
 import com.DigitalMoneyHouse.msvc_users.dto.UserDTO;
+import com.DigitalMoneyHouse.msvc_users.dto.UserRegisteredResponseDTO;
 import com.DigitalMoneyHouse.msvc_users.entity.User;
 import com.DigitalMoneyHouse.msvc_users.repository.IUserRepository;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
+@Service
 public class UserService {
     private final IUserRepository userRepository;
 
     public UserService(IUserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    public UserDTO createUser(UserDTO userDTO) {
+    public UserRegisteredResponseDTO createUser(UserDTO userDTO) {
         User user = new User();
 
-        user.setName(userDTO.getName());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
         user.setDni(userDTO.getDni());
         user.setEmail(userDTO.getEmail());
         user.setPhone(userDTO.getPhone());
@@ -24,7 +29,8 @@ public class UserService {
         user.setUpdatedAt(LocalDateTime.now());
 
         User savedUser = userRepository.save(user);
-        return convertToDTO(savedUser);
+
+        return new UserRegisteredResponseDTO(savedUser.getId(),  "ok");
     }
 
     public UserDTO getUserById(Long id) {
@@ -33,15 +39,24 @@ public class UserService {
     }
 
     public UserDTO getUserByEmail(String email) {
-        User user = userRepository.findByEmail(email);
-        return convertToDTO(user);
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            System.out.println(" * * * * Usuario encontrado: " + user.get());
+        } else {
+            System.out.println(" / * * * * * Usuario no encontrado.");
+        }
+
+
+        return user.map(this::convertToDTO).orElse(null);
     }
 
     public UserDTO updateUser(Long id, UserDTO userDTO) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            user.setName(userDTO.getName());
+
+            user.setFirstName(userDTO.getFirstName());
+            user.setLastName(userDTO.getLastName());
             user.setDni(userDTO.getDni());
             user.setEmail(userDTO.getEmail());
             user.setPhone(userDTO.getPhone());
@@ -65,7 +80,8 @@ public class UserService {
     private UserDTO convertToDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
-        userDTO.setName(user.getName());
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
         userDTO.setDni(user.getDni());
         userDTO.setEmail(user.getEmail());
         userDTO.setPhone(user.getPhone());
