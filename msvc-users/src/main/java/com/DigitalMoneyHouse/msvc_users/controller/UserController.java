@@ -3,7 +3,7 @@ package com.DigitalMoneyHouse.msvc_users.controller;
 
 import com.DigitalMoneyHouse.msvc_users.dto.UserDTO;
 import com.DigitalMoneyHouse.msvc_users.dto.UserRegisteredResponseDTO;
-import com.DigitalMoneyHouse.msvc_users.entity.User;
+import com.DigitalMoneyHouse.msvc_users.dto.UserResponseDTO;
 import com.DigitalMoneyHouse.msvc_users.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,21 +27,21 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
-        UserDTO userDTO = userService.getUserById(id);
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
+        UserResponseDTO userDTO = userService.getUserById(id);
         if (userDTO != null) {
             return ResponseEntity.ok(userDTO);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    //@GetMapping("/email/{email}")
+
    @GetMapping("/email")
-   public ResponseEntity<UserDTO> getUserByEmail(@RequestParam String email) {
-//        public ResponseEntity<UserDTO> getUserByEmail(  @PathVariable String email) {
-        UserDTO userDTO = userService.getUserByEmail(email);
-        if (userDTO != null) {
-            return ResponseEntity.ok(userDTO);
+   public ResponseEntity<UserResponseDTO> getUserByEmail(@RequestParam String email) {
+
+       UserResponseDTO urDTO = userService.getUserByEmail(email);
+        if (urDTO != null) {
+            return ResponseEntity.ok(urDTO);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
