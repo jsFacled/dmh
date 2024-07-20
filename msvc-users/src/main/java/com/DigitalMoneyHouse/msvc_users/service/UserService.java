@@ -10,7 +10,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -70,6 +72,13 @@ public class UserService {
             return userMapper.toUserDTO(updatedUser);
         }
         return null;
+    }
+
+    public List<UserResponseDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream()
+                .map(userMapper::toUserResponseDTO)
+                .collect(Collectors.toList());
     }
 
     public void deleteUser(Long id) {

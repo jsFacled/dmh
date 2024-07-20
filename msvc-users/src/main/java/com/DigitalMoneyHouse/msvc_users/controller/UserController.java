@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/users")
@@ -37,6 +39,7 @@ public class UserController {
 
 
    @GetMapping("/email")
+   //Se solicita con Params --> http://localhost:8080/users/email?email=maub@gmail.com
    public ResponseEntity<UserResponseDTO> getUserByEmail(@RequestParam String email) {
 
        UserResponseDTO urDTO = userService.getUserByEmail(email);
@@ -44,6 +47,12 @@ public class UserController {
             return ResponseEntity.ok(urDTO);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    @GetMapping("all")
+    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
+        List<UserResponseDTO> users = userService.getAllUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
