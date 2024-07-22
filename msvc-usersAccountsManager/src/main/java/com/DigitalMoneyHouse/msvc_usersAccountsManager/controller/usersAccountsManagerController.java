@@ -10,14 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/gestor")
+@RequestMapping("/manager")
 public class usersAccountsManagerController {
 
-
-
-
-
-        private final usersAccountsManagerService usersAccountsManagerService;
+    private final usersAccountsManagerService usersAccountsManagerService;
 
     public usersAccountsManagerController(com.DigitalMoneyHouse.msvc_usersAccountsManager.service.usersAccountsManagerService usersAccountsManagerService) {
         this.usersAccountsManagerService = usersAccountsManagerService;
