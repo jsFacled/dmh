@@ -2,14 +2,13 @@ package com.DigitalMoneyHouse.msvc_accounts.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-
 import java.math.BigDecimal;
 
-@AllArgsConstructor
-@NoArgsConstructor
+//@AllArgsConstructor
+//@NoArgsConstructor
 @Data
 public class AccountDTO {
+        private Long id;
         private Long userId;
         private BigDecimal balance;
         private String cvu;
