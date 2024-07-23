@@ -3,30 +3,36 @@ package com.DigitalMoneyHouse.msvc_usersAccountsManager.service;
 
 import com.DigitalMoneyHouse.msvc_usersAccountsManager.client.IAccountClient;
 import com.DigitalMoneyHouse.msvc_usersAccountsManager.client.IUserClient;
+import com.DigitalMoneyHouse.msvc_usersAccountsManager.dto.AccountRegisteredResponseDTO;
 import com.DigitalMoneyHouse.msvc_usersAccountsManager.dto.UserDTO;
 import com.DigitalMoneyHouse.msvc_usersAccountsManager.dto.UserRegisteredResponseDTO;
-import com.DigitalMoneyHouse.msvc_usersAccountsManager.dto.UserResponseDTO;
+import com.DigitalMoneyHouse.msvc_usersAccountsManager.dto.UsersAccountsManagerDTO;
 import com.DigitalMoneyHouse.msvc_usersAccountsManager.entity.UsersAccountsManager;
 import com.DigitalMoneyHouse.msvc_usersAccountsManager.repository.UsersAccountsManagerRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
+
 @Service
-public class usersAccountsManagerService {
+public class UsersAccountsManagerService {
+
 private final UsersAccountsManagerRepository usersAccountsManagerRepository;
     private final IUserClient userClient;
     private final IAccountClient accountClient;
 
-    public usersAccountsManagerService(UsersAccountsManagerRepository usersAccountsManagerRepository, IUserClient userClient, IAccountClient accountClient) {
+    public UsersAccountsManagerService(UsersAccountsManagerRepository usersAccountsManagerRepository, IUserClient userClient, IAccountClient accountClient) {
         this.usersAccountsManagerRepository = usersAccountsManagerRepository;
         this.userClient = userClient;
         this.accountClient = accountClient;
     }
 
     @Transactional
-    public void registrarUserAccount(UserDTO userDTO) {
+    public ResponseEntity<?> registrarUserAccount(UserDTO userDTO) {
         /*
         * Se configura un segundo intento si fallara la primera vez la creacion de Usuario
         * */
@@ -41,12 +47,14 @@ private final UsersAccountsManagerRepository usersAccountsManagerRepository;
 
         for (int attempt = 1; attempt <= maxRetries; attempt++) {
             try {
-                // Intentar crear el usuario utilizando el cliente de usuarios
-                UserRegisteredResponseDTO userResponse = userClient.createUser(userDTO);
+                // Intentar crear el usuario utilizando el cliente Feing de usuarios
+                UserRegisteredResponseDTO userRegisteredResponseDTO = userClient.createUser(userDTO);
 
                 // Verificar si la respuesta contiene un ID de usuario válido
-                if (userResponse != null && userResponse.getUserId() != null) {
-                    userId = userResponse.getUserId(); // Almacenar el ID del usuario
+                if (userRegisteredResponseDTO != null && userRegisteredResponseDTO.getUserId() != null) {
+                    userId = userRegisteredResponseDTO.getUserId(); // Almacenar el ID del usuario
+
+                    System.out.println("Se creo el usuario con user_id "+userId);
                     userCreated = true; // Indicar que el usuario fue creado exitosamente
                     break; // Salir del bucle si el usuario se creó correctamente
                 } else {
@@ -71,19 +79,33 @@ private final UsersAccountsManagerRepository usersAccountsManagerRepository;
 
         // Paso 2: Si el usuario fue creado exitosamente, proceder con la creación de la cuenta.
 
-        // Paso 2: Verificar si el usuario fue creado exitosamente
-        if (userCreated) {
-            try {
-                // Verificar que el usuario realmente existe
-                UserResponseDTO existingUser = userClient.getUserById(userId);
-                if (existingUser != null) {
-                    // Intentar crear la cuenta para el usuario utilizando el cliente de cuentas
-                    accountClient.createAccount(userId);
-                    // Guardar la información en la base de datos
-                    UsersAccountsManager usersAccounts = new UsersAccountsManager();
-                    usersAccounts.setUserId(userId);
-                    // Configura otros campos si es necesario
-                    usersAccountsManagerRepository.save(usersAccounts);
+          if (userCreated) {
+               try {
+
+
+               ResponseEntity<AccountRegisteredResponseDTO> responseEntityAccountRegistered = accountClient.createAccount(userId);
+
+                if (responseEntityAccountRegistered.getStatusCode() == HttpStatus.CREATED) {
+
+                    //Extraigo el dto de accountRegistered y le asigno los valores.
+                   AccountRegisteredResponseDTO createdAccount = responseEntityAccountRegistered.getBody();;
+
+                    System.out.println("Se creo la cuenta con account_id "+ createdAccount.getId());
+
+                    //Crear entidad
+                    UsersAccountsManager usersAccountsManager = new UsersAccountsManager();
+                    usersAccountsManager.setUserId(userId);
+                    usersAccountsManager.setAccountId(createdAccount.getId());
+                    usersAccountsManager.setCreatedAt(LocalDateTime.now());
+
+                    // Guardar la información del manager en la base de datos
+                    UsersAccountsManager uaManagerSaved =usersAccountsManagerRepository.save(usersAccountsManager);
+
+                   //Crear el dto a partir de la base de datos
+                    UsersAccountsManagerDTO usersAccountsManagerDTO=new UsersAccountsManagerDTO(uaManagerSaved.getId(),uaManagerSaved.getUserId(),uaManagerSaved.getAccountId());
+
+
+                    return ResponseEntity.status(HttpStatus.CREATED).body(usersAccountsManagerDTO);
                 } else {
                     throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Usuario no encontrado después de la creación");
                 }

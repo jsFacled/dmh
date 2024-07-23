@@ -35,10 +35,9 @@ public class AccountMapper {
         }
         AccountResponseDTO accountResponseDTO = new AccountResponseDTO();
 
+        accountResponseDTO.setId(account.getId());
         accountResponseDTO.setUserId(account.getUserId());
-        accountResponseDTO.setBalance(account.getBalance());
-        accountResponseDTO.setCvu(account.getCvu());
-        accountResponseDTO.setAlias(account.getAlias());
+
         return accountResponseDTO;
     }
 

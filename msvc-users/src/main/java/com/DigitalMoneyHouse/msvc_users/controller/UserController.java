@@ -5,6 +5,8 @@ import com.DigitalMoneyHouse.msvc_users.dto.UserDTO;
 import com.DigitalMoneyHouse.msvc_users.dto.UserRegisteredResponseDTO;
 import com.DigitalMoneyHouse.msvc_users.dto.UserResponseDTO;
 import com.DigitalMoneyHouse.msvc_users.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,17 +19,22 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
-
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     @PostMapping("/create")
     public ResponseEntity<UserRegisteredResponseDTO> createUser(@Validated @RequestBody UserDTO userDTO) {
-        UserRegisteredResponseDTO createdUser = userService.createUser(userDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+        try {
+            UserRegisteredResponseDTO createdUser = userService.createUser(userDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+        } catch (Exception e) {
+            logger.error("Error al crear el usuario", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
         UserResponseDTO userDTO = userService.getUserById(id);

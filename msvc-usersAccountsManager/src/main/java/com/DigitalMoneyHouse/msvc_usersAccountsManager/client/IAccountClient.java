@@ -1,7 +1,9 @@
 package com.DigitalMoneyHouse.msvc_usersAccountsManager.client;
 
 
+import com.DigitalMoneyHouse.msvc_usersAccountsManager.dto.AccountRegisteredResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -9,5 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface IAccountClient {
 
     @PostMapping("/create/{userId}")
-    String createAccount(@PathVariable("userId") Long userId);
+    ResponseEntity<AccountRegisteredResponseDTO> createAccount(@PathVariable("userId") Long userId);
+
+
 }
