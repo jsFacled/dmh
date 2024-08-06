@@ -36,7 +36,7 @@ public class SecurityConfig {
                                         "auth/login",
                                         "auth/logout",
                                         "manager/hello",
-                                        "manager/getAll",
+                                        "manager/register",
 
                                         "http://localhost:8082/users").permitAll()
 

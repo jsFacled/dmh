@@ -1,6 +1,7 @@
 package com.DigitalMoneyHouse.msvc_users.controller;
 
 
+import com.DigitalMoneyHouse.msvc_users.dto.LoginRequestDTO;
 import com.DigitalMoneyHouse.msvc_users.dto.UserDTO;
 import com.DigitalMoneyHouse.msvc_users.dto.UserRegisteredResponseDTO;
 import com.DigitalMoneyHouse.msvc_users.dto.UserResponseDTO;
@@ -78,4 +79,19 @@ public class UserController {
     }
 
 
-}
+    @PostMapping("/validate")
+    public ResponseEntity<String> validateUser(@RequestBody LoginRequestDTO loginRequestDTO) {
+        try {
+            boolean isAuthenticated = userService.validarSinEncriptar(loginRequestDTO);
+            if (isAuthenticated) {
+                return ResponseEntity.ok("User authenticated successfully");
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password");
+            }
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+
+    }
+
+    }

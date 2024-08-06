@@ -35,10 +35,10 @@ public class AuthController {
     public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequest) {
         try {
             String token = authService.authenticateAndGenerateToken(loginRequest);
-            System.out.println("* * L26 * * Iniciando dentro de AuthController la solicitud al AuthService para que autentique");
+            System.out.println("* * L38 * * Iniciando dentro de AuthController la solicitud al AuthService para que autentique");
             return ResponseEntity.ok(token);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(" * * L29 * * Invalid credentials desde linea 28 en metodo login del AuthController. Pero el context holder es: "+ SecurityContextHolder.getContext());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(" * * L41 * * Invalid credentials desde linea 28 en metodo login del AuthController. Pero el context holder es: "+ SecurityContextHolder.getContext());
         }
     }
 

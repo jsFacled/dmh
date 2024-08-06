@@ -9,5 +9,5 @@ public class UserRequestDTO {
     private String email;
     private String password;
 
-    // Getters and setters
+    // Getters and setters con lombok
 }

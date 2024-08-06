@@ -1,11 +1,8 @@
 package com.DigitalMoneyHouse.msvc_users.service;
 
-import com.DigitalMoneyHouse.msvc_users.dto.UserDTO;
-import com.DigitalMoneyHouse.msvc_users.dto.UserRegisteredResponseDTO;
-import com.DigitalMoneyHouse.msvc_users.dto.UserResponseDTO;
+import com.DigitalMoneyHouse.msvc_users.dto.*;
 import com.DigitalMoneyHouse.msvc_users.entity.User;
 import com.DigitalMoneyHouse.msvc_users.repository.IUserRepository;
-import com.DigitalMoneyHouse.msvc_users.dto.UserMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -89,4 +86,20 @@ public class UserService {
         passwordEncoder.encode(password);
         return password;
     }
+
+
+    //En vez de devolver un ResponseEntity directamente se responde con boolean.
+    public boolean validarSinEncriptar(LoginRequestDTO loginRequestDTO) {
+        System.out.println("Desde ms-users en UserService linea 48 validarSinEncriptar()");
+
+        // Trae el usuario de la base de datos (id, email, contraseña)
+        User userEntity = userRepository.findByEmail(loginRequestDTO.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        System.out.println("* * L 54 * * UserService validarSinEncriptar el userprueba que devuelve base de datos es : " + userEntity);
+
+        // Matchea la contraseña del DTO con la de la base de datos (inseguro)
+        return loginRequestDTO.getPassword().equals(userEntity.getPassword());
+    }
+
 }

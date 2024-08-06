@@ -21,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserRequestDTO user = userClient.findByEmail(username).getBody(); // Busca por email, que usas como username
+        UserRequestDTO user = userClient.findByEmail(username).getBody(); // Busca por email, que se usa como username
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }

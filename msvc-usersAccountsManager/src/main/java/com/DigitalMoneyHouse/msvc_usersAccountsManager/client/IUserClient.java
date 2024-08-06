@@ -18,8 +18,8 @@ public interface IUserClient {
     @PostMapping("/create")
     UserRegisteredResponseDTO createUser(@RequestBody UserDTO userDTO);
 
-    @GetMapping("/{id}")
-    UserResponseDTO getUserById(@PathVariable("id") Long id);
+   // @GetMapping("/{id}")
+    //UserResponseDTO getUserById(@PathVariable("id") Long id);
 
 //Creados al agregar security
     @PostMapping("/validate")

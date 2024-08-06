@@ -1,6 +1,7 @@
 package com.DigitalMoneyHouse.msvc_usersAccountsManager.service;
 
 
+import com.DigitalMoneyHouse.msvc_usersAccountsManager.auth.autModels.LoginRequestDTO;
 import com.DigitalMoneyHouse.msvc_usersAccountsManager.client.IAccountClient;
 import com.DigitalMoneyHouse.msvc_usersAccountsManager.client.IUserClient;
 import com.DigitalMoneyHouse.msvc_usersAccountsManager.dto.AccountRegisteredResponseDTO;
@@ -116,4 +117,7 @@ private final UsersAccountsManagerRepository usersAccountsManagerRepository;
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No se pudo crear el usuario después de los reintentos");
         }
     }
+
 }
+
+

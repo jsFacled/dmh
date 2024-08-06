@@ -1,13 +1,12 @@
 package com.DigitalMoneyHouse.msvc_usersAccountsManager.controller;
 
 
+import com.DigitalMoneyHouse.msvc_usersAccountsManager.auth.autModels.LoginRequestDTO;
 import com.DigitalMoneyHouse.msvc_usersAccountsManager.dto.UserDTO;
 import com.DigitalMoneyHouse.msvc_usersAccountsManager.service.UsersAccountsManagerService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/manager")
@@ -17,6 +16,11 @@ public class UsersAccountsManagerController {
 
     public UsersAccountsManagerController(UsersAccountsManagerService usersAccountsManagerService) {
         this.usersAccountsManagerService = usersAccountsManagerService;
+    }
+
+    @GetMapping("/hello")
+    public ResponseEntity<?> index() {
+        return ResponseEntity.ok("Hola Mundo!! Soy ms-Manager!!!");
     }
 
     @PostMapping("/register")
