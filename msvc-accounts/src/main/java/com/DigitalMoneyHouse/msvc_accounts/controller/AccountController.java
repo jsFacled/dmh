@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
+
 @RestController
 @RequestMapping("/account")
 public class AccountController {
@@ -35,4 +37,10 @@ public class AccountController {
         }
     }
 
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BigDecimal> getBalance(@PathVariable("id") Long accountId){
+
+        return ResponseEntity.status(HttpStatus.OK).body(accountService.getBalance(accountId));
+    }
 }

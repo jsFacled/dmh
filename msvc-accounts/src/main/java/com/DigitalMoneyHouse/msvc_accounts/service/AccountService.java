@@ -40,4 +40,8 @@ public class AccountService {
 
         return accountMapper.toAccountResponseDTO(savedAccount);
     }
+
+    public BigDecimal getBalance(Long acconut_id){
+        return accountRepository.getReferenceById(acconut_id).getBalance();
+    }
 }
