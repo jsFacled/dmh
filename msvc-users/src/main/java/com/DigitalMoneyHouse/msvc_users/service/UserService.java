@@ -4,6 +4,7 @@ import com.DigitalMoneyHouse.msvc_users.controller.UserController;
 import com.DigitalMoneyHouse.msvc_users.dto.*;
 import com.DigitalMoneyHouse.msvc_users.entity.User;
 import com.DigitalMoneyHouse.msvc_users.exceptions.UserAlreadyExistsException;
+import com.DigitalMoneyHouse.msvc_users.exceptions.UserNotFoundException;
 import com.DigitalMoneyHouse.msvc_users.repository.IUserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,12 +60,14 @@ public class UserService {
 
     public UserResponseDTO getUserByEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
+
         if (user.isPresent()) {
             System.out.println(" * * * * Usuario encontrado: " + user.get());
+            return userMapper.toUserResponseDTO(user.get());
         } else {
             System.out.println(" / * * * * * Usuario no encontrado.");
+            throw new UserNotFoundException("Usuario con email " + email + " no encontrado.");
         }
-        return user.map(userMapper::toUserResponseDTO).orElse(null);
     }
 
     public UserDTO updateUser(Long id, UserDTO userDTO) {
@@ -102,6 +105,21 @@ public class UserService {
     }
 
 
+    public boolean validarSinEncriptar(LoginRequestDTO loginRequestDTO) {
+        System.out.println("* * Desde ms-users * * en UserService INICIO en validarSinEncriptar()");
+
+        // Trae el usuario de la base de datos (id, email, contraseña)
+        User userEntity = userRepository.findByEmail(loginRequestDTO.getEmail())
+                .orElseThrow(() -> new UserNotFoundException("Usuario con email " + loginRequestDTO.getEmail() + " no encontrado"));
+
+        System.out.println("* * UserService * *  validarSinEncriptar el userprueba que devuelve base de datos es : " + userEntity);
+
+        // Matchea la contraseña del DTO con la de la base de datos (inseguro)
+        return loginRequestDTO.getPassword().equals(userEntity.getPassword());
+    }
+
+
+/*
     //En vez de devolver un ResponseEntity directamente se responde con boolean.
     public boolean validarSinEncriptar(LoginRequestDTO loginRequestDTO) {
         System.out.println("* * Desde ms-users * * en UserService INICIO en validarSinEncriptar()");
@@ -115,5 +133,5 @@ public class UserService {
         // Matchea la contraseña del DTO con la de la base de datos (inseguro)
         return loginRequestDTO.getPassword().equals(userEntity.getPassword());
     }
-
+*/
 }

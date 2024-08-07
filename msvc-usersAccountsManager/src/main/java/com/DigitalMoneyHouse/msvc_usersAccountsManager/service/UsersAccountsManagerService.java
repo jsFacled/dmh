@@ -20,7 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 @Service
-public class UsersAccountsManagerService {
+public class UsersAccountsManagerService implements  IUsersAccountsManagerService{
 
     private final UsersAccountsManagerRepository usersAccountsManagerRepository;
     private final IUserClient userClient;
@@ -34,6 +34,11 @@ public class UsersAccountsManagerService {
 
     @Transactional
     public ResponseEntity<?> registrarUserAccount(UserDTO userDTO) {
+/**
+ * Este método maneja la creación de un usuario y su cuenta asociada,
+ * incluyendo manejo de reintentos y manejo de excepciones para diversos escenarios de fallo.
+ */
+
         // Número máximo de intentos para crear el usuario
         final int maxRetries = 2;
         // Tiempo de espera entre intentos fallidos (en milisegundos)
@@ -130,5 +135,7 @@ public class UsersAccountsManagerService {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No se pudo crear el usuario después de los reintentos");
         }
     }
+
+
 }
 
