@@ -1,5 +1,6 @@
 package com.DigitalMoneyHouse.msvc_accounts.controller;
 
+import com.DigitalMoneyHouse.msvc_accounts.dto.AccountDTO;
 import com.DigitalMoneyHouse.msvc_accounts.dto.AccountResponseDTO;
 import com.DigitalMoneyHouse.msvc_accounts.service.AccountService;
 import org.springframework.http.HttpStatus;
@@ -12,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
 
 @RestController
-@RequestMapping("/account")
+@RequestMapping("/accounts")
 public class AccountController {
 
     private final AccountService accountService;
@@ -39,8 +40,10 @@ public class AccountController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<BigDecimal> getBalance(@PathVariable("id") Long accountId){
+    public ResponseEntity<AccountDTO> getAccount(@PathVariable("id") Long accountId){
 
-        return ResponseEntity.status(HttpStatus.OK).body(accountService.getBalance(accountId));
+        return ResponseEntity.status(HttpStatus.OK).body(accountService.getAccount(accountId));
     }
+
+
 }

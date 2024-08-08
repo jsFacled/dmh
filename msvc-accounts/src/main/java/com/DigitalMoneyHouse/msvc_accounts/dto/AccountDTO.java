@@ -8,8 +8,7 @@ import java.math.BigDecimal;
 //@NoArgsConstructor
 @Data
 public class AccountDTO {
-        private Long id;
-        private Long userId;
+
         private BigDecimal balance;
         private String cvu;
         private String alias;
