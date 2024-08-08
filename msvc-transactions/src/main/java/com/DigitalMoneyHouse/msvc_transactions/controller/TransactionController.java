@@ -18,13 +18,13 @@ public class TransactionController {
     public TransactionController(TransactionService transactionService) {
         this.transactionService = transactionService;
     }
-/*
+
     @GetMapping("/last-five/{account_id}")
     public ResponseEntity<List<TransactionDTO>> getLastFiveTransactions(@PathVariable Long account_id) {
         List<TransactionDTO> transactions = transactionService.findLastFiveTransactions(account_id);
         return ResponseEntity.ok(transactions);
     }
-*/
+
     @GetMapping
     public List<Transaction> getAllTransactions() {
         return transactionService.getAllTransactions();

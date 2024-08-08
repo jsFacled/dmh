@@ -20,14 +20,14 @@ public class TransactionService {
     public TransactionService(ITransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
     }
-/*
+
     public List<TransactionDTO> findLastFiveTransactions(Long accountId) {
         List<Transaction> transactions = transactionRepository.findTop5ByAccountIdOrderByDateDesc(accountId);
         return transactions.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
-*/
+
 
     private TransactionDTO convertToDTO(Transaction transaction) {
         return new TransactionDTO(

@@ -11,8 +11,8 @@ import java.util.List;
 
 @Repository
 public interface ITransactionRepository extends JpaRepository<Transaction, Long> {
-   // @Query("SELECT t FROM transaction t WHERE t.destinationAccountId = :accountId OR t.originTypeId = :accountId ORDER BY t.date DESC")
-  //  List<Transaction> findTop5ByAccountIdOrderByDateDesc(Long accountId);
+    @Query("SELECT t FROM Transaction t WHERE t.originAccountId = :accountId OR t.destinationAccountId = :accountId ORDER BY t.date DESC")
+    List<Transaction> findTop5ByAccountIdOrderByDateDesc(Long accountId);
 
 
     @Query("SELECT t FROM Transaction t WHERE t.originAccountId = :accountId OR t.destinationAccountId = :accountId")
