@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -60,4 +61,29 @@ public class AccountService {
         }
     }
 
+    public AccountDTO patchAccount(Long accountId, Map<String, Object> updates) {
+        Optional<Account> accountOptional = accountRepository.findById(accountId);
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            updates.forEach((key, value) -> {
+                switch (key) {
+                    case "balance":
+                        account.setBalance(new BigDecimal(value.toString()));
+                        break;
+                    case "cvu":
+                        account.setCvu((String) value);
+                        break;
+                    case "alias":
+                        account.setAlias((String) value);
+                        break;
+                    // Añadir casos para otros campos si es necesario
+                }
+            });
+            account.setUpdatedAt(LocalDateTime.now());
+            Account updatedAccount = accountRepository.save(account);
+            return accountMapper.toAccountDTO(updatedAccount);
+        } else {
+            throw new EntityNotFoundException("Account with id " + accountId + " not found");
+        }
+    }
 }

@@ -17,13 +17,12 @@ public class AccountMapper {
 
         AccountDTO accountDTO = new AccountDTO();
 
- /*
-        accountDTO.setId(account.getId());
-        accountDTO.setUserId(account.getUserId);
+
+
         accountDTO.setBalance(account.getBalance());
         accountDTO.setCvu(account.getCvu());
         accountDTO.setAlias(account.getAlias());
-*/
+
         return accountDTO;
     }
 
