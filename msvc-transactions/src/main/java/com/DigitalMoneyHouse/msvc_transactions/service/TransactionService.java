@@ -54,11 +54,11 @@ public class TransactionService {
         return transactionRepository.findById(id);
     }
 
-    /*
+
     public List<Transaction> getTransactionsByAccountId(Long accountId) {
         return transactionRepository.findAllByAccountId(accountId);
     }
-*/
+
     public Transaction createTransaction(Transaction transaction) {
         return transactionRepository.save(transaction);
     }

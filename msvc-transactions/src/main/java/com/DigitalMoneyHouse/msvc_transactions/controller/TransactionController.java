@@ -36,12 +36,12 @@ public class TransactionController {
         return transaction.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    /*
+
     @GetMapping("/account/{accountId}")
     public List<Transaction> getTransactionsByAccountId(@PathVariable Long accountId) {
         return transactionService.getTransactionsByAccountId(accountId);
     }
-*/
+
 
     @PostMapping
     public Transaction createTransaction(@RequestBody Transaction transaction) {

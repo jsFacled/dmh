@@ -15,7 +15,7 @@ public interface ITransactionRepository extends JpaRepository<Transaction, Long>
   //  List<Transaction> findTop5ByAccountIdOrderByDateDesc(Long accountId);
 
 
+    @Query("SELECT t FROM Transaction t WHERE t.originAccountId = :accountId OR t.destinationAccountId = :accountId")
+    List<Transaction> findAllByAccountId(@Param("accountId") Long accountId);
 
-  //  @Query("SELECT t FROM transaction t WHERE t.destinationAccountId = :accountId OR t.originTypeId = :accountId")
-  //  List<Transaction> findAllByAccountId(Long accountId);
 }
