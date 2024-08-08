@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -82,6 +83,36 @@ public class UserService {
             user.setPhone(userDTO.getPhone());
             user.setUpdatedAt(LocalDateTime.now());
 
+            User updatedUser = userRepository.save(user);
+            return userMapper.toUserDTO(updatedUser);
+        }
+        return null;
+    }
+
+    public UserDTO patchUser(Long id, Map<String, Object> updates) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            updates.forEach((key, value) -> {
+                switch (key) {
+                    case "firstName":
+                        user.setFirstName((String) value);
+                        break;
+                    case "lastName":
+                        user.setLastName((String) value);
+                        break;
+                    case "dni":
+                        user.setDni((String) value);
+                        break;
+                    case "email":
+                        user.setEmail((String) value);
+                        break;
+                    case "phone":
+                        user.setPhone((String) value);
+                        break;
+                }
+            });
+            user.setUpdatedAt(LocalDateTime.now());
             User updatedUser = userRepository.save(user);
             return userMapper.toUserDTO(updatedUser);
         }

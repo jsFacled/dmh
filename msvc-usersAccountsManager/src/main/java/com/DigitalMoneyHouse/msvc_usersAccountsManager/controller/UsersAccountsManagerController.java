@@ -28,19 +28,7 @@ public class UsersAccountsManagerController {
     }
 
 
-
-/*
-    @PostMapping("/register")
-        public ResponseEntity<?> registerUserAccount(@RequestBody UserDTO userDTO) {
-            try {
-                usersAccountsManagerService.registrarUserAccount(userDTO);
-                return ResponseEntity.ok("Desde manager Controller Cuenta y usuario creados con éxito.");
-            } catch (ResponseStatusException e) {
-                return ResponseEntity.status(e.getStatusCode()).body("Desde manager Controller Error al crear usuario y cuenta: " + e.getReason());
-            }
-        }
-*/
-    @PostMapping("/register")
+@PostMapping("/register")
     public ResponseEntity<?> registerUserAccount(@RequestBody UserDTO userDTO) {
         try {
             return usersAccountsManagerService.registrarUserAccount(userDTO);
@@ -52,6 +40,7 @@ public class UsersAccountsManagerController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error inesperado: " + e.getMessage());
         }
     }
+
 
 
 
