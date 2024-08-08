@@ -28,6 +28,17 @@ public class AccountService {
         this.cvuGeneratorService = cvuGeneratorService;
     }
 
+
+    // Método para obtener solo el saldo de una cuenta
+    public BigDecimal getAccountBalance(Long accountId) {
+        BigDecimal balance = accountRepository.findBalanceByAccountId(accountId);
+        if (balance == null) {
+            throw new EntityNotFoundException("Account with id " + accountId + " not found");
+        }
+        return balance;
+    }
+
+
     public AccountResponseDTO createAccount(Long user_id) {
 
         Account account = new Account();

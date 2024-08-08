@@ -27,6 +27,12 @@ public class AccountController {
     private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
 
+    @GetMapping("/{id}/balance")
+    public ResponseEntity<BigDecimal> getAccountBalance(@PathVariable("id") Long accountId) {
+        BigDecimal balance = accountService.getAccountBalance(accountId);
+        return ResponseEntity.ok(balance);
+    }
+
     @PostMapping("/create/{userId}")
     public ResponseEntity<?> createAccount(@PathVariable("userId") Long userId) {
         try {
@@ -43,7 +49,6 @@ public class AccountController {
 
     @GetMapping("/{id}")
     public ResponseEntity<AccountDTO> getAccount(@PathVariable("id") Long accountId){
-
         return ResponseEntity.status(HttpStatus.OK).body(accountService.getAccount(accountId));
     }
 
