@@ -7,8 +7,10 @@ import java.util.List;
 
 @Repository
 public interface ICardRepository extends JpaRepository<Card, Long> {
-    // Puedes agregar métodos personalizados si es necesario
 
-    // Método personalizado para encontrar tarjetas por accountId
-    List<Card> findByAccountId(String accountId);
+    // Encontrar tarjetas por accountId
+    List<Card> findByAccountId(Long accountId);
+
+    // Encontrar tarjetas por userId
+    List<Card> findByUserId(Long userId);
 }

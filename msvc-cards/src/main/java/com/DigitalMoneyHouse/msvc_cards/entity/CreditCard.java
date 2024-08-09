@@ -5,14 +5,18 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
+@Getter
+@Setter
 @Entity
 public class CreditCard extends Card {
     // Getters y Setters
-    @Getter
+
     private BigDecimal creditLimit; // Límite de crédito
 
     @Enumerated(EnumType.STRING)

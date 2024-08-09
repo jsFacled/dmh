@@ -30,9 +30,13 @@ public abstract class Card {
     @Column(name = "cvc")
     private String cvc; // Código de seguridad de la tarjeta (CVC/CVV)
 
-    @ManyToOne
-    @Column(name = "account_id", nullable = false)
+
+    @Column(name = "account_id")//puede ser nulo porque se puede asociar y desasociar a la cuenta
     private Long accountId;
+
+
+    @Column(name = "user_id", nullable = false) //pertenece a un usuario
+    private Long userId;
 
 
 }
