@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RestController
 @RequestMapping("/cards")
 public class CardController {
@@ -44,10 +45,20 @@ private final CardService cardService;
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-    // Endpoint para crear una nueva tarjeta
+
     @PostMapping
-    public ResponseEntity<Card> createCard(@RequestBody CardDTO cardDTO) {
-        Card newCard = cardService.createCard(cardDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newCard);
+    public ResponseEntity<Void> createCard(@RequestBody CardDTO cardDTO) {
+        cardService.createCard(cardDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCard(@PathVariable Long id) {
+        boolean isDeleted = cardService.deleteCard(id);
+        if (isDeleted) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
