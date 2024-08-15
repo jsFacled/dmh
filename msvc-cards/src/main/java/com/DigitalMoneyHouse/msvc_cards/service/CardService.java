@@ -1,59 +1,73 @@
 package com.DigitalMoneyHouse.msvc_cards.service;
 
-import com.DigitalMoneyHouse.msvc_cards.dto.CardDTO;
-import com.DigitalMoneyHouse.msvc_cards.dto.ICardMapper;
-import com.DigitalMoneyHouse.msvc_cards.entity.Card;
-import com.DigitalMoneyHouse.msvc_cards.enums.CardType;
+import com.DigitalMoneyHouse.msvc_cards.exceptions.CardAlreadyExistsException;
+import com.DigitalMoneyHouse.msvc_cards.models.CardMapperGeneric;
+import com.DigitalMoneyHouse.msvc_cards.models.dto.CardCreationDTO;
+import com.DigitalMoneyHouse.msvc_cards.models.dto.CardRequestDTO;
+import com.DigitalMoneyHouse.msvc_cards.models.entity.Card;
+import com.DigitalMoneyHouse.msvc_cards.models.enums.CardType;
 import com.DigitalMoneyHouse.msvc_cards.repository.ICardRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CardService {
 
-
     private final ICardRepository cardRepository;
-    private final ICardMapper cardMapper;
+    private final CardMapperGeneric cardMapper;
 
-    public CardService(ICardRepository cardRepository, ICardMapper cardMapper) {
+    public CardService(ICardRepository cardRepository, CardMapperGeneric cardMapper) {
         this.cardRepository = cardRepository;
         this.cardMapper = cardMapper;
     }
 
-    public List<Card> getAllCards() {
-        return cardRepository.findAll();
+    public List<CardRequestDTO> getAllCards() {
+        // Obtener todas las entidades Card de la base de datos
+        List<Card> cards = cardRepository.findAll();
+
+        // Mapea cada entidad Card a su correspondiente CardRequestDTO
+        return cards.stream()
+                .map(cardMapper::toCardRequestDTO) // Utiliza el método mapeador
+                .collect(Collectors.toList()); // Recoger los DTOs en una lista
     }
+
     // Método para obtener tarjetas por accountId
-    public List<Card> getCardsByAccountId(Long accountId) {
-        return cardRepository.findByAccountId(accountId);
+    public List<CardRequestDTO> getCardsByAccountId(Long accountId) {
+        // Obtener las entidades Card asociadas a un accountId específico
+        List<Card> cards = cardRepository.findByAccountId(accountId);
+
+        // Mapear cada entidad Card a su correspondiente CardRequestDTO
+        return cards.stream()
+                .map(cardMapper::toCardRequestDTO) // Utiliza el método mapeador
+                .collect(Collectors.toList()); // Recoger los DTOs en una lista
     }
 
     public List<Card> getCardsByUserId(Long userId) {
         return cardRepository.findByUserId(userId);
     }
-    public Optional<Card> getCardById(Long id) {
-        return cardRepository.findById(id);
+
+    // Método para obtener una tarjeta por su ID
+    public Optional<CardRequestDTO> getCardById(Long id) {
+        // Obtener la entidad Card asociada al ID especificado
+        Optional<Card> cardOptional = cardRepository.findById(id);
+
+        // Mapear la entidad a CardRequestDTO si está presente
+        return cardOptional.map(cardMapper::toCardRequestDTO);
     }
 
 
     @Transactional
-    public void createCard(CardDTO cardDTO) {
-        Card newCard;
+    public void createCard(CardCreationDTO cardDTO) {
+        // Verifica si la tarjeta ya existe
+        Optional<Card> existingCard = cardRepository.findByNumber(cardDTO.getNumber());
+        System.out.println("Se ha encontrado la tarjeta numero "+existingCard.get().getNumber());
+        throw new CardAlreadyExistsException("La tarjeta ya está asociada a otra cuenta.");
 
-        if (cardDTO.getCardType() == CardType.CREDIT) {
-            newCard = cardMapper.toCreditCard(cardDTO);
-        } else if (cardDTO.getCardType() == CardType.DEBIT) {
-            newCard = cardMapper.toDebitCard(cardDTO);
-        } else {
-            throw new IllegalArgumentException("Tipo de tarjeta no soportado.");
-        }
-
-        cardRepository.save(newCard);
     }
-
     /*
     // Método para crear una nueva tarjeta sin Mapstruct
     public void createCard(CardDTO cardDTO) {

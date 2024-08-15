@@ -1,4 +1,4 @@
-package com.DigitalMoneyHouse.msvc_accounts.client.cards;
+package com.DigitalMoneyHouse.msvc_accounts.client.cards.models;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

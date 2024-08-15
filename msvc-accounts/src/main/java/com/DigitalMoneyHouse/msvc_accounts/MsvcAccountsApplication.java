@@ -11,7 +11,7 @@ public class MsvcAccountsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MsvcAccountsApplication.class, args);
 
-		System.out.println(" - - - - - - - - - - Iniciando ms-Accounts - - - - - - - - - - - - - - - - - - - --");
+		System.out.println(" // * * // * * // * * // * * // * * // * *  Iniciando ms-Accounts // * * // * * // * * // * * // * * // * * ");
 	}
 
 }

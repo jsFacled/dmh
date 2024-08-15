@@ -1,11 +1,12 @@
-package com.DigitalMoneyHouse.msvc_cards.dto;
-
-import com.DigitalMoneyHouse.msvc_cards.enums.CardBrand;
-import com.DigitalMoneyHouse.msvc_cards.enums.CardType;
+package com.DigitalMoneyHouse.msvc_cards.models.dto;
+import com.DigitalMoneyHouse.msvc_cards.models.enums.CardBrand;
+import com.DigitalMoneyHouse.msvc_cards.models.enums.CardType;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
-public class CreditCardDTO {
+@Data
+public class CardCreationDTO {
 
 
     private String expiration;
@@ -18,4 +19,5 @@ public class CreditCardDTO {
     private CardBrand brand;
     private BigDecimal creditLimit;// Solo para CreditCard
     private BigDecimal balance;// Solo para DebitCard
+
 }

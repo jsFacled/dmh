@@ -1,6 +1,6 @@
-package com.DigitalMoneyHouse.msvc_cards.entity;
+package com.DigitalMoneyHouse.msvc_cards.models.entity;
 
-import com.DigitalMoneyHouse.msvc_cards.enums.CardBrand;
+import com.DigitalMoneyHouse.msvc_cards.models.enums.CardBrand;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -17,8 +17,6 @@ public class DebitCard extends Card {
 
     private BigDecimal balance; // Saldo disponible
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "brand", nullable = false)
-    private CardBrand brand;
+
 
    }

@@ -1,11 +1,10 @@
-package com.DigitalMoneyHouse.msvc_cards.entity;
+package com.DigitalMoneyHouse.msvc_cards.models.entity;
 
-import com.DigitalMoneyHouse.msvc_cards.enums.CardBrand;
+import com.DigitalMoneyHouse.msvc_cards.models.enums.CardBrand;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,9 +18,7 @@ public class CreditCard extends Card {
 
     private BigDecimal creditLimit; // Límite de crédito
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "brand", nullable = false)
-    private CardBrand brand;
+
 
 
     public void setCreditLimit(BigDecimal creditLimit) {

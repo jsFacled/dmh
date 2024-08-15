@@ -12,4 +12,7 @@ import java.math.BigDecimal;
 public interface IAccountRepository extends JpaRepository<Account, Long> {
     @Query("SELECT a.balance FROM Account a WHERE a.id = :accountId")
     BigDecimal findBalanceByAccountId(@Param("accountId") Long accountId);
+
+    @Query("SELECT a.userId FROM Account a WHERE a.id = :accountId")
+    Long findUserIdByAccountId(@Param("accountId") Long accountId);
 }

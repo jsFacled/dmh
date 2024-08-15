@@ -1,13 +1,6 @@
-package com.DigitalMoneyHouse.msvc_cards.dto;
+package com.DigitalMoneyHouse.msvc_cards.models.dto;
 
-import com.DigitalMoneyHouse.msvc_cards.entity.Card;
-import com.DigitalMoneyHouse.msvc_cards.entity.CreditCard;
-import com.DigitalMoneyHouse.msvc_cards.enums.CardBrand;
-import com.DigitalMoneyHouse.msvc_cards.enums.CardType;
 import org.springframework.stereotype.Component;
-
-
-import java.math.BigDecimal;
 
 
 @Component

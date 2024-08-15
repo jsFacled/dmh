@@ -5,6 +5,7 @@ import com.DigitalMoneyHouse.msvc_accounts.dto.AccountDTO;
 import com.DigitalMoneyHouse.msvc_accounts.dto.AccountMapper;
 import com.DigitalMoneyHouse.msvc_accounts.dto.AccountResponseDTO;
 import com.DigitalMoneyHouse.msvc_accounts.entity.Account;
+import com.DigitalMoneyHouse.msvc_accounts.exceptions.AccountNotFoundException;
 import com.DigitalMoneyHouse.msvc_accounts.repository.IAccountRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class AccountService {
     public BigDecimal getAccountBalance(Long accountId) {
         BigDecimal balance = accountRepository.findBalanceByAccountId(accountId);
         if (balance == null) {
-            throw new EntityNotFoundException("Account with id " + accountId + " not found");
+            throw new AccountNotFoundException("Account with id " + accountId + " not found");
         }
         return balance;
     }
@@ -68,7 +69,7 @@ public class AccountService {
 
             return accountDTO;
         } else {
-            throw new EntityNotFoundException("Account with id " + account_id + " not found");
+            throw new AccountNotFoundException("Account with id " + account_id + " not found");
         }
     }
 
