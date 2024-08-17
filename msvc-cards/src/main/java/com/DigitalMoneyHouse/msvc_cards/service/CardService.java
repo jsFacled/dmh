@@ -1,12 +1,14 @@
 package com.DigitalMoneyHouse.msvc_cards.service;
 
 import com.DigitalMoneyHouse.msvc_cards.exceptions.CardAlreadyExistsException;
+import com.DigitalMoneyHouse.msvc_cards.exceptions.UnsupportedCardTypeException;
 import com.DigitalMoneyHouse.msvc_cards.models.CardMapperGeneric;
 import com.DigitalMoneyHouse.msvc_cards.models.dto.CardCreationDTO;
 import com.DigitalMoneyHouse.msvc_cards.models.dto.CardRequestDTO;
 import com.DigitalMoneyHouse.msvc_cards.models.entity.Card;
 import com.DigitalMoneyHouse.msvc_cards.models.enums.CardType;
 import com.DigitalMoneyHouse.msvc_cards.repository.ICardRepository;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,45 +62,30 @@ public class CardService {
     }
 
 
+
+
     @Transactional
     public void createCard(CardCreationDTO cardDTO) {
         // Verifica si la tarjeta ya existe
-        Optional<Card> existingCard = cardRepository.findByNumber(cardDTO.getNumber());
-        System.out.println("Se ha encontrado la tarjeta numero "+existingCard.get().getNumber());
-        throw new CardAlreadyExistsException("La tarjeta ya está asociada a otra cuenta.");
-
-    }
-    /*
-    // Método para crear una nueva tarjeta sin Mapstruct
-    public void createCard(CardDTO cardDTO) {
-        Card newCard;
-
-        if (cardDTO.getCardType() == CardType.CREDIT) {
-            CreditCard creditCard = new CreditCard();
-            creditCard.setCreditLimit(cardDTO.getCreditLimit()); // O puedes recibirlo desde el DTO si es necesario
-            creditCard.setBrand(cardDTO.getBrand());
-            newCard = creditCard;
-        } else if (cardDTO.getCardType() == CardType.DEBIT) {
-            DebitCard debitCard = new DebitCard();
-            debitCard.setBalance(BigDecimal.ZERO); // O puedes recibirlo desde el DTO si es necesario
-            debitCard.setBrand(cardDTO.getBrand());
-            newCard = debitCard;
-        } else {
-            throw new IllegalArgumentException("Tipo de tarjeta no soportado.");
+        boolean existingCard = cardRepository.existsByNumber(cardDTO.getNumber());
+        if (existingCard) {
+            // Si la tarjeta ya existe, lanza una excepción
+            throw new CardAlreadyExistsException("La tarjeta ya está asociada a otra cuenta.");
         }
 
-        // Setear los campos comunes desde el DTO
-        newCard.setExpiration(cardDTO.getExpiration());
-        newCard.setNumber(cardDTO.getNumber());
-        newCard.setHolderName(cardDTO.getHolderName());
-        newCard.setCvc(cardDTO.getCvc());
-        newCard.setAccountId(cardDTO.getAccountId());
-        newCard.setUserId(cardDTO.getUserId());
-
+        Card newCard;
+        if (cardDTO.getCardType() == CardType.CREDIT) {
+            newCard = cardMapper.toCreditCard(cardDTO);
+        } else if (cardDTO.getCardType() == CardType.DEBIT) {
+            newCard = cardMapper.toDebitCard(cardDTO);
+        } else {
+            throw new HttpMessageNotReadableException("Tipo de tarjeta no soportado.");
+        }
 
         cardRepository.save(newCard);
     }
-*/
+
+
     public boolean deleteCard(Long id) {
         Optional<Card> cardOptional = cardRepository.findById(id);
         if (cardOptional.isPresent()) {
@@ -108,4 +95,9 @@ public class CardService {
             return false;
         }
     }
+
+    public Optional<Card> getCardByNumber(String number) {
+        return cardRepository.findByNumber(number);
+    }
+
 }

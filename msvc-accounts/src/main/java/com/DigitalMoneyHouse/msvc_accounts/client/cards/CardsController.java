@@ -20,7 +20,7 @@ public class CardsController {
         this.cardsService = cardsService;
     }
     @PostMapping
-    public ResponseEntity<Void> crearTarjeta(@PathVariable Long accountId, @RequestBody CardRequestDTO cardRequest) {
+    public ResponseEntity<?> crearTarjeta(@PathVariable Long accountId, @RequestBody CardRequestDTO cardRequest) {
             cardsService.createCard(accountId, cardRequest);
             return ResponseEntity.status(HttpStatus.CREATED).build();
 
