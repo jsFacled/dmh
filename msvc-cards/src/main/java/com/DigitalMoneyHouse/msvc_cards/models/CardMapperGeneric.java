@@ -58,6 +58,7 @@ public class CardMapperGeneric {
 
     public CardRequestDTO toCardRequestDTO(Card card) {
         CardRequestDTO cardRequestDTO = new CardRequestDTO();
+        cardRequestDTO.setId(card.getId());
         cardRequestDTO.setExpiration(card.getExpiration());
         cardRequestDTO.setNumber(card.getNumber());
         cardRequestDTO.setHolderName(card.getHolderName());

@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 @Data
 public class CardRequestDTO {
-
+    private Long id;
     private String expiration;
     private String number;
     private String holderName;

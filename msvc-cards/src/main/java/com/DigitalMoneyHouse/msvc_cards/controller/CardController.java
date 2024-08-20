@@ -64,10 +64,10 @@ private final CardService cardService;
     }
 
     @PostMapping
-    public ResponseEntity<ErrorResponseDTO> createCard(@RequestBody CardCreationDTO cardDTO) {
+    public ResponseEntity<?> createCard(@RequestBody CardCreationDTO cardDTO) {
         try {
-            cardService.createCard(cardDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+           cardService.createCard(cardDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(cardDTO);
         } catch (CardAlreadyExistsException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(new ErrorResponseDTO(e.getMessage(), "CARD_ALREADY_EXISTS"));
@@ -81,31 +81,7 @@ private final CardService cardService;
     }
 
 
-    /*
-    @PostMapping
-    public ResponseEntity<?> createCard(@RequestBody CardCreationDTO cardDTO) {
-        try {
-            cardService.createCard(cardDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-        } catch (CardAlreadyExistsException e) {
-            // Devuelve el mensaje de error en el cuerpo de la respuesta
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("message", e.getMessage()); // Usa el mensaje de la excepción
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
-        } catch (UnsupportedCardTypeException e) {
-            // Devuelve el mensaje de error en el cuerpo de la respuesta
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-        } catch (Exception e) {
-            // Imprime el stack trace para depuración
-            e.printStackTrace();
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("message", "Error interno del servidor");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-        }
-    }
-*/
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCard(@PathVariable Long id) {
         boolean isDeleted = cardService.deleteCard(id);

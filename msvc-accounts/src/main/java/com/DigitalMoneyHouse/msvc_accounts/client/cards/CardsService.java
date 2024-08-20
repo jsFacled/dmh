@@ -26,27 +26,26 @@ public class CardsService {
 
     }
 
-    //Recibe un RequestDTO, se evalúa para agregarle accountId y userId
-    public void createCard(Long accountId, CardRequestDTO cardRequest) {
+    public ResponseEntity<?> createCard(Long accountId, CardRequestDTO cardRequest) {
         // Obtener userId de la base de datos
         Long userId = accountRepository.findUserIdByAccountId(accountId);
         if (userId == null) {
             throw new AccountNotFoundException("El accountId proporcionado no corresponde a un usuario válido.");
         }
-        // Crear el DTO completo
 
+        // Crear el DTO completo
         CardCreationDTO cardCreationDTO = buildCardCreationDTO(accountId, cardRequest, userId);
 
-        // Enviar el DTO al microservicio de tarjetas
-        ResponseEntity<Void> response = cardFeignClient.createCard(cardCreationDTO);
-        System.out.println("*/*/*/*/ cardCreationDTO es : "+cardCreationDTO);
-        System.out.println("*/*/*/*/ el response que viene de ms-cards es : " + response);
-        // Manejar la respuesta del microservicio
-        if (response.getStatusCode() == HttpStatus.CONFLICT) {
-            throw new CardAlreadyExistsException("La tarjeta ya está asociada a otra cuenta.");
-        } else if (response.getStatusCode() == HttpStatus.BAD_REQUEST) {
-            throw new IllegalArgumentException("Datos de la tarjeta no válidos.");
-        }
+        // Se envía el DTO al microservicio de tarjetas
+        // El FeignClient debe lanzar la excepción si ocurre un conflicto.
+        /*
+         Cuando ms-cards devuelva un error 409, el CustomErrorDecoder lanzará CardAlreadyExistsException,
+          que será capturada en el controlador global de excepciones en ms-accounts y devolverá un ResponseEntity
+          con el estado 409 CONFLICT y un mensaje de error adecuado.
+         */
+
+
+        return cardFeignClient.createCard(cardCreationDTO);
     }
 
     //Método estático para crear un dto que será enviado a ms-cards
@@ -99,5 +98,10 @@ public class CardsService {
         } else {
             throw new RuntimeException("Error al obtener la tarjeta con ID: " + cardId);
         }
+    }
+
+    public ResponseEntity<Void> borrarTarjeta(Long cardId) {
+
+       return cardFeignClient.deleteCard(cardId);
     }
 }

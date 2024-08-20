@@ -79,7 +79,7 @@ public class CardService {
         } else if (cardDTO.getCardType() == CardType.DEBIT) {
             newCard = cardMapper.toDebitCard(cardDTO);
         } else {
-            throw new HttpMessageNotReadableException("Tipo de tarjeta no soportado.");
+            throw new UnsupportedCardTypeException("Tipo de tarjeta no soportado.");
         }
 
         cardRepository.save(newCard);
