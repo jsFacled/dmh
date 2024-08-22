@@ -8,8 +8,9 @@ public class MsvcTransactionsApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MsvcTransactionsApplication.class, args);
-
-		System.out.println("- - - - - - - - - - - - - Ms-transactions iniciado - - - - - - - - - - - - - - -");
+		System.out.println();
+		System.out.println("*/*/*/*/*/*/* - - - - - - - - - - - - - */*/*/*/*/*/*  Ms-transactions iniciado  */*/*/*/*/*/* - - - - - - - - - - - - - - -*/*/*/*/*/*/*/");
+		System.out.println();
 	}
 
 }
