@@ -2,6 +2,7 @@ package com.DigitalMoneyHouse.msvc_accounts.client.transactions;
 
 
 import com.DigitalMoneyHouse.msvc_accounts.client.transactions.models.TransactionDTO;
+import com.DigitalMoneyHouse.msvc_accounts.client.transactions.transactionsFeign.ITransactionFeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +17,11 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/accounts/{accountId}")
-public class TransactionsController {
+public class TransactionsClientController {
 
     private final ITransactionFeignClient iTransactionFeignClient;
 
-    public TransactionsController(ITransactionFeignClient iTransactionFeignClient) {
+    public TransactionsClientController(ITransactionFeignClient iTransactionFeignClient) {
         this.iTransactionFeignClient = iTransactionFeignClient;
     }
     @PostMapping("/transactions")

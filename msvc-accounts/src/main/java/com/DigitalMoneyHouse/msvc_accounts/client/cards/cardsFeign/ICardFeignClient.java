@@ -1,4 +1,4 @@
-package com.DigitalMoneyHouse.msvc_accounts.client.cards;
+package com.DigitalMoneyHouse.msvc_accounts.client.cards.cardsFeign;
 
 
 import com.DigitalMoneyHouse.msvc_accounts.client.cards.exceptions.CustomErrorDecoder;

@@ -1,4 +1,4 @@
-package com.DigitalMoneyHouse.msvc_accounts.client.transactions;
+package com.DigitalMoneyHouse.msvc_accounts.client.transactions.transactionsFeign;
 
 import com.DigitalMoneyHouse.msvc_accounts.client.transactions.models.TransactionDTO;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "ms-transactions")
+@FeignClient(name = "ms-transactions", url = "http://localhost:8084")
 public interface ITransactionFeignClient {
 
     @PostMapping("/transactions")
     ResponseEntity<?> createTransaction(@RequestBody TransactionDTO transactionDTO);
 
-    @GetMapping("/accounts/{accountId}/transactions")
+    @GetMapping("/transactions/account/{accountId}")
     ResponseEntity<List<TransactionDTO>> getTransactionsByAccountId(@PathVariable("accountId") Long accountId);
 
     @GetMapping("/accounts/{accountId}/transactions/{transactionId}")

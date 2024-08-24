@@ -1,6 +1,7 @@
 package com.DigitalMoneyHouse.msvc_accounts.exceptions;
 
 import com.DigitalMoneyHouse.msvc_accounts.client.cards.exceptions.CardAlreadyExistsException;
+import com.DigitalMoneyHouse.msvc_accounts.client.cards.exceptions.CardNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -34,6 +35,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDTO> handleCardAlreadyExistsException(CardAlreadyExistsException ex) {
         logger.error("Error: " + ex.getMessage(), ex);
         ErrorResponseDTO errorResponse = new ErrorResponseDTO("La tarjeta ya está asociada a otra cuenta", "CARD_ALREADY_EXISTS");
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+    }
+
+    // Maneja excepciones cuando la tarjeta no se encuentra.
+    @ExceptionHandler(CardNotFoundException.class)
+    public ResponseEntity<ErrorResponseDTO> handleCardAlreadyExistsException(CardNotFoundException ex) {
+        logger.error("Error: " + ex.getMessage(), ex);
+        ErrorResponseDTO errorResponse = new ErrorResponseDTO("La tarjeta no se encuentra", "CARD_NOT_FOUND");
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
     }
 

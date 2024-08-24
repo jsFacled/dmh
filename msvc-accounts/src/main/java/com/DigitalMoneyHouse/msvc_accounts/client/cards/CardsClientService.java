@@ -1,8 +1,7 @@
 package com.DigitalMoneyHouse.msvc_accounts.client.cards;
 
-import com.DigitalMoneyHouse.msvc_accounts.client.cards.exceptions.CardAlreadyExistsException;
+import com.DigitalMoneyHouse.msvc_accounts.client.cards.cardsFeign.ICardFeignClient;
 import com.DigitalMoneyHouse.msvc_accounts.client.cards.models.CardCreationDTO;
-import com.DigitalMoneyHouse.msvc_accounts.client.cards.models.CardDTO;
 import com.DigitalMoneyHouse.msvc_accounts.client.cards.models.CardRequestDTO;
 import com.DigitalMoneyHouse.msvc_accounts.client.cards.models.CardType;
 import com.DigitalMoneyHouse.msvc_accounts.exceptions.AccountNotFoundException;
@@ -15,12 +14,12 @@ import java.util.List;
 
 
 @Service
-public class CardsService {
+public class CardsClientService {
 
     private final ICardFeignClient cardFeignClient;
     private final IAccountRepository accountRepository;
 
-    public CardsService(ICardFeignClient cardFeignClient, IAccountRepository accountRepository) {
+    public CardsClientService(ICardFeignClient cardFeignClient, IAccountRepository accountRepository) {
         this.cardFeignClient = cardFeignClient;
         this.accountRepository = accountRepository;
 
