@@ -21,7 +21,7 @@ public class CardsController {
 
    private final CardsService cardsService;
 
-    public CardsController(ICardFeignClient cardFeignClient, CardsService cardsService) {
+    public CardsController(CardsService cardsService) {
 
         this.cardsService = cardsService;
     }

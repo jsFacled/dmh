@@ -13,7 +13,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * Maneja las excepciones globales en msvc_accounts.
+ * Maneja las excepciones globales en msvc_accounts y también las relacionadas a client.cards y client.transactions.
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {

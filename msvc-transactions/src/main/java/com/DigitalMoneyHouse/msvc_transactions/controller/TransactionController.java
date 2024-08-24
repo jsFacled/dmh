@@ -3,6 +3,7 @@ package com.DigitalMoneyHouse.msvc_transactions.controller;
 import com.DigitalMoneyHouse.msvc_transactions.models.dto.TransactionDTO;
 import com.DigitalMoneyHouse.msvc_transactions.models.entity.Transaction;
 import com.DigitalMoneyHouse.msvc_transactions.service.TransactionService;
+import jakarta.ws.rs.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,40 +21,45 @@ public class TransactionController {
     }
 
     @GetMapping("/last-five/{account_id}")
-    public ResponseEntity<List<TransactionDTO>> getLastFiveTransactions(@PathVariable Long account_id) {
-        List<TransactionDTO> transactions = transactionService.findLastFiveTransactions(account_id);
+    public ResponseEntity<List<TransactionDTO>> getLastFiveTransactionsByAccountId(@PathVariable Long account_id) {
+        List<TransactionDTO> transactions = transactionService.findLastFiveTransactionsByAccountId(account_id);
         return ResponseEntity.ok(transactions);
     }
 
     @GetMapping
-    public List<Transaction> getAllTransactions() {
+    public List<TransactionDTO> getAllTransactions() {
         return transactionService.getAllTransactions();
     }
 
+
     @GetMapping("/{id}")
-    public ResponseEntity<Transaction> getTransactionById(@PathVariable Long id) {
-        Optional<Transaction> transaction = transactionService.getTransactionById(id);
-        return transaction.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<TransactionDTO> getTransactionById(@PathVariable Long id) {
+        try {
+            TransactionDTO transactionDTO = transactionService.getTransactionById(id);
+            return ResponseEntity.ok(transactionDTO);
+        } catch (NotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 
     @GetMapping("/account/{accountId}")
-    public List<Transaction> getTransactionsByAccountId(@PathVariable Long accountId) {
+    public List<TransactionDTO> getTransactionsByAccountId(@PathVariable Long accountId) {
         return transactionService.getTransactionsByAccountId(accountId);
     }
 
 
     @PostMapping
-    public Transaction createTransaction(@RequestBody Transaction transaction) {
-        return transactionService.createTransaction(transaction);
+    public ResponseEntity<?> createTransaction(@RequestBody TransactionDTO transactionDTO) {
+        return transactionService.createTransaction(transactionDTO);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Transaction> updateTransaction(@PathVariable Long id, @RequestBody Transaction transactionDetails) {
+    public ResponseEntity<TransactionDTO> updateTransaction(@PathVariable Long id, @RequestBody TransactionDTO transactionDTO) {
         try {
-            Transaction updatedTransaction = transactionService.updateTransaction(id, transactionDetails);
-            return ResponseEntity.ok(updatedTransaction);
-        } catch (RuntimeException e) {
+            TransactionDTO updatedTransactionDTO = transactionService.updateTransaction(id, transactionDTO);
+            return ResponseEntity.ok(updatedTransactionDTO);
+        } catch (NotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
