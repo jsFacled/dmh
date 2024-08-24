@@ -42,11 +42,9 @@ public class TransactionsClientController {
         return iTransactionFeignClient.getTransactionsByAccountId(accountId);
     }
 
-    @GetMapping("/{transactionId}")
-    public ResponseEntity<TransactionDTO> getTransactionById(
-            @PathVariable Long accountId,
-            @PathVariable Long transactionId) {
+    @GetMapping("/activity/{transactionId}")
+    public ResponseEntity<TransactionDTO> getTransactionById(@PathVariable Long transactionId) {
 
-        return iTransactionFeignClient.getTransactionById(accountId, transactionId);
+        return iTransactionFeignClient.getTransactionById(transactionId);
     }
 }

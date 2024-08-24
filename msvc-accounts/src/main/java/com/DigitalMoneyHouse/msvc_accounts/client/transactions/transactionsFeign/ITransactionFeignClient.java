@@ -16,6 +16,6 @@ public interface ITransactionFeignClient {
     @GetMapping("/transactions/account/{accountId}")
     ResponseEntity<List<TransactionDTO>> getTransactionsByAccountId(@PathVariable("accountId") Long accountId);
 
-    @GetMapping("/accounts/{accountId}/transactions/{transactionId}")
-    ResponseEntity<TransactionDTO> getTransactionById(@PathVariable("accountId") Long accountId, @PathVariable("transactionId") Long transactionId);
+    @GetMapping("/transactions/{id}")
+    ResponseEntity<TransactionDTO> getTransactionById(@PathVariable("id") Long id);
 }

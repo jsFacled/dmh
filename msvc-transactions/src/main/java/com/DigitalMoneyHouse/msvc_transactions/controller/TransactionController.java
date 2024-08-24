@@ -32,6 +32,11 @@ public class TransactionController {
     }
 
 
+       @GetMapping("/account/{accountId}")
+    public List<TransactionDTO> getTransactionsByAccountId(@PathVariable Long accountId) {
+        return transactionService.getTransactionsByAccountId(accountId);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<TransactionDTO> getTransactionById(@PathVariable Long id) {
         try {
@@ -40,12 +45,6 @@ public class TransactionController {
         } catch (NotFoundException e) {
             return ResponseEntity.notFound().build();
         }
-    }
-
-
-    @GetMapping("/account/{accountId}")
-    public List<TransactionDTO> getTransactionsByAccountId(@PathVariable Long accountId) {
-        return transactionService.getTransactionsByAccountId(accountId);
     }
 
 
