@@ -3,8 +3,10 @@ package com.DigitalMoneyHouse.msvc_accounts.client.transactions;
 
 import com.DigitalMoneyHouse.msvc_accounts.client.transactions.models.TransactionDTO;
 import com.DigitalMoneyHouse.msvc_accounts.client.transactions.transactionsFeign.ITransactionFeignClient;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -43,8 +45,14 @@ public class TransactionsClientController {
     }
 
     @GetMapping("/activity/{transactionId}")
-    public ResponseEntity<TransactionDTO> getTransactionById(@PathVariable Long transactionId) {
+    public ResponseEntity<?> getTransactionById(@PathVariable Long transactionId) {
 
-        return iTransactionFeignClient.getTransactionById(transactionId);
+        try {
+            return iTransactionFeignClient.getTransactionById(transactionId);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error interno del servidor desde controller feign");
+        }
     }
 }

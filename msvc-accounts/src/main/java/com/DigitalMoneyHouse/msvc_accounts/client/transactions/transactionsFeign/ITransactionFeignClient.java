@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "ms-transactions", url = "http://localhost:8084")
+@FeignClient(name = "ms-transactions", url = "http://localhost:8084", configuration = TransactionsFeignConfig.class)
 public interface ITransactionFeignClient {
 
     @PostMapping("/transactions")

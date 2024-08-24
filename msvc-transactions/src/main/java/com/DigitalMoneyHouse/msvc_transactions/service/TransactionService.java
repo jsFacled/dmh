@@ -1,5 +1,6 @@
 package com.DigitalMoneyHouse.msvc_transactions.service;
 
+import com.DigitalMoneyHouse.msvc_transactions.exceptions.TransactionNotFoundException;
 import com.DigitalMoneyHouse.msvc_transactions.models.dto.TransactionDTO;
 import com.DigitalMoneyHouse.msvc_transactions.models.entity.Transaction;
 import com.DigitalMoneyHouse.msvc_transactions.repository.ITransactionRepository;
@@ -37,11 +38,19 @@ public class TransactionService {
                 .collect(Collectors.toList());
     }
 
+
     public TransactionDTO getTransactionById(Long id) {
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException("Invalid transaction ID provided: " + id);
+        }
+
         return transactionRepository.findById(id)
                 .map(this::convertToDTO)
-                .orElseThrow(() -> new NotFoundException("Transacción no encontrada"));
+                .orElseThrow(() -> new TransactionNotFoundException("Transacción con id **" + id + "** no encontrada"));
     }
+
+
+
 
     public List<TransactionDTO> getTransactionsByAccountId(Long accountId) {
         return transactionRepository.findAllByAccountId(accountId)
@@ -49,6 +58,8 @@ public class TransactionService {
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
+
+
 
     public ResponseEntity<TransactionDTO> createTransaction(TransactionDTO transactionDTO) {
         // Convertir el DTO a una entidad Transaction
