@@ -15,4 +15,7 @@ public interface IAccountRepository extends JpaRepository<Account, Long> {
 
     @Query("SELECT a.userId FROM Account a WHERE a.id = :accountId")
     Long findUserIdByAccountId(@Param("accountId") Long accountId);
+
+    boolean existsById(Long accountId);
+
 }

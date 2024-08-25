@@ -2,7 +2,6 @@ package com.DigitalMoneyHouse.msvc_accounts.client.transactions;
 
 
 import com.DigitalMoneyHouse.msvc_accounts.client.transactions.models.TransactionDTO;
-import com.DigitalMoneyHouse.msvc_accounts.client.transactions.transactionsFeign.ITransactionFeignClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +19,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/accounts/{accountId}")
 public class TransactionsClientController {
+private final TransactionClientService transactionClientService;
 
-    private final ITransactionFeignClient iTransactionFeignClient;
-
-    public TransactionsClientController(ITransactionFeignClient iTransactionFeignClient) {
-        this.iTransactionFeignClient = iTransactionFeignClient;
+    public TransactionsClientController(TransactionClientService transactionClientService) {
+        this.transactionClientService = transactionClientService;
     }
+
     @PostMapping("/transactions")
     public ResponseEntity<?> createTransaction(
             @PathVariable Long accountId,
@@ -34,21 +33,21 @@ public class TransactionsClientController {
         // Ensure that the accountId in the transactionDTO matches the path variable
         transactionDTO.setOriginAccountId(accountId);
 
-        return iTransactionFeignClient.createTransaction(transactionDTO);
+        return transactionClientService.createTransaction(transactionDTO);
     }
 
     @GetMapping("activity")
     public ResponseEntity<List<TransactionDTO>> getTransactionsByAccountId(
             @PathVariable Long accountId) {
 
-        return iTransactionFeignClient.getTransactionsByAccountId(accountId);
+        return transactionClientService.getTransactionsByAccountId(accountId);
     }
 
     @GetMapping("/activity/{transactionId}")
     public ResponseEntity<?> getTransactionById(@PathVariable Long transactionId) {
 
         try {
-            return iTransactionFeignClient.getTransactionById(transactionId);
+            return transactionClientService.getTransactionById(transactionId);
         } catch (ResponseStatusException e) {
             return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
         } catch (Exception e) {
