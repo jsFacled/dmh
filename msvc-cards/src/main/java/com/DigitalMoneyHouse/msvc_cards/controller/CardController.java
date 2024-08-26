@@ -11,7 +11,9 @@ import com.DigitalMoneyHouse.msvc_cards.service.CardService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @RestController
@@ -102,4 +104,39 @@ private final CardService cardService;
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping("decrease-limit")
+    public ResponseEntity<String> decreaseCreditLimit(
+            @RequestParam Long cardId,
+            @RequestParam BigDecimal amount) {
+        try {
+            cardService.decreaseCreditLimit(cardId, amount);
+            return ResponseEntity.ok("Límite de crédito disminuido exitosamente");
+        } catch (ResponseStatusException ex) {
+            return ResponseEntity.status(ex.getStatusCode()).body(ex.getReason());
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al disminuir el límite de crédito");
+        }
+    }
+
+    @PostMapping("decrease-balance")
+    public ResponseEntity<String> decreaseDebitCardBalance(
+            @RequestParam Long cardId,
+            @RequestParam BigDecimal amount) {
+        try {
+            cardService.decreaseDebitCardBalance(cardId, amount);
+            return ResponseEntity.ok("Saldo de la tarjeta de débito disminuido exitosamente");
+        } catch (ResponseStatusException ex) {
+            return ResponseEntity.status(ex.getStatusCode()).body(ex.getReason());
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al disminuir el saldo de la tarjeta de débito");
+        }
+    }
+
+    @GetMapping("/{cardId}/associated-with-account/{accountId}")
+    public ResponseEntity<Boolean> isCardAssociatedWithAccount(@PathVariable Long cardId, @PathVariable Long accountId) {
+        boolean isAssociated = cardService.isCardAssociatedWithAccount(cardId, accountId);
+        return ResponseEntity.ok(isAssociated);
+    }
+
 }

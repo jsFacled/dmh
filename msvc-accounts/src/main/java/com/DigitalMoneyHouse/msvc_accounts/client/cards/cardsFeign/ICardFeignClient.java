@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @FeignClient(name = "ms-cards", url = "http://localhost:8085")
@@ -35,6 +36,22 @@ public interface ICardFeignClient {
 
     @GetMapping("cards/{cardId}/number")
     String getNumberById (@PathVariable("cardId") Long cardId);
+
+    // Método para disminuir el límite de crédito
+    @PostMapping("/cards/decrease-limit")
+    ResponseEntity<String> decreaseCreditLimit(
+            @RequestParam("cardId") Long cardId,
+            @RequestParam("amount") BigDecimal amount);
+
+    // Método para disminuir el saldo de la tarjeta de débito
+    @PostMapping("/cards/decrease-balance")
+    ResponseEntity<String> decreaseDebitCardBalance(
+            @RequestParam("cardId") Long cardId,
+            @RequestParam("amount") BigDecimal amount);
+
+
+    @GetMapping("/cards/{cardId}/associated-with-account/{accountId}")
+    ResponseEntity<Boolean> isCardAssociatedWithAccount(@PathVariable("cardId") Long cardId, @PathVariable("accountId") Long accountId);
 
 
 }

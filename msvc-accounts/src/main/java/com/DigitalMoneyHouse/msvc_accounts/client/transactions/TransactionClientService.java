@@ -2,6 +2,9 @@ package com.DigitalMoneyHouse.msvc_accounts.client.transactions;
 
 
 import com.DigitalMoneyHouse.msvc_accounts.client.cards.cardsFeign.ICardFeignClient;
+import com.DigitalMoneyHouse.msvc_accounts.client.cards.models.CardDTO;
+import com.DigitalMoneyHouse.msvc_accounts.client.cards.models.CardRequestDTO;
+import com.DigitalMoneyHouse.msvc_accounts.client.cards.models.CardType;
 import com.DigitalMoneyHouse.msvc_accounts.client.transactions.models.TransactionDTO;
 import com.DigitalMoneyHouse.msvc_accounts.client.transactions.models.enums.ProductOriginType;
 import com.DigitalMoneyHouse.msvc_accounts.client.transactions.models.enums.TransactionType;
@@ -45,25 +48,20 @@ public class TransactionClientService {
         return transactionFeignClient.createTransaction(transactionDTO);
     }
 
-
     private void validateTransactionDetails(TransactionDTO transactionDTO) {
-
         // 1. Validar si la cuenta de origen existe
         if (!accountRepository.existsById(transactionDTO.getOriginAccountId())) {
             throw new IllegalArgumentException("Cuenta de origen no encontrada");
         }
 
-
         // 2. Validar el tipo de transacción y el origen del producto
         if (transactionDTO.getType() == TransactionType.TRANSFER_BETWEEN_ACCOUNTS) {
-            productOriginType=ProductOriginType.ACCOUNT;
+            productOriginType = ProductOriginType.ACCOUNT;
             if (transactionDTO.getProductOriginType() != ProductOriginType.ACCOUNT) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de origen del producto debe ser ACCOUNT para TRANSFER_BETWEEN_ACCOUNTS");
             }
             // Validar si el ID del producto de origen coincide con la cuenta de origen
             if (!transactionDTO.getProductOriginId().equals(transactionDTO.getOriginAccountId())) {
-                System.out.println("originId: " + transactionDTO.getProductOriginId() );
-                System.out.println("originAcc: " + transactionDTO.getOriginAccountId());
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El ID de la cuenta de origen no coincide con el ID del producto de origen");
             }
         } else if (transactionDTO.getType() == TransactionType.RECHARGE_FROM_CARD) {
@@ -72,8 +70,31 @@ public class TransactionClientService {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de origen del producto debe ser CARD para RECHARGE_FROM_CARD");
             }
             // Validar si el ID del producto de origen coincide con el ID de la tarjeta proporcionado
-            if (!cardFeignClient.existsById(transactionDTO.getProductOriginId())) {
+            CardRequestDTO card = cardFeignClient.getCardById(transactionDTO.getProductOriginId()).getBody();
+            if (card == null) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarjeta no encontrada para el ID proporcionado");
+            }
+
+            // **Nueva Validación:** Verificar que la tarjeta esté asociada a la cuenta de origen
+            boolean isAssociated = Boolean.TRUE.equals(cardFeignClient.isCardAssociatedWithAccount(card.getId(), transactionDTO.getOriginAccountId()).getBody());
+
+            if (!isAssociated) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La tarjeta no está asociada a la cuenta de origen");
+            }
+
+            // Validar según el tipo de tarjeta
+            if (card.getCardType() == CardType.CREDIT) {
+                // Validar límite de crédito disponible
+                if (card.getCreditLimit().compareTo(BigDecimal.ZERO) <= 0) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Límite de crédito insuficiente");
+                }
+            } else if (card.getCardType() == CardType.DEBIT) {
+                // Validar saldo disponible
+                if (card.getBalance().compareTo(BigDecimal.ZERO) <= 0) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Saldo insuficiente en la tarjeta de débito");
+                }
+            } else {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de tarjeta no soportado");
             }
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de transacción no soportado");
@@ -83,18 +104,48 @@ public class TransactionClientService {
         if (!accountRepository.existsById(transactionDTO.getDestinationAccountId())) {
             throw new IllegalArgumentException("Cuenta de destino no encontrada");
         }
-
     }
 
     private void debitAndCreditAccounts(TransactionDTO transactionDTO) {
+        boolean sufficientFunds;
+
         // 1. Verificar Fondos Disponibles en Origen
-        int rowsAffected = accountRepository.decreaseBalanceIfSufficient(transactionDTO.getOriginAccountId(), transactionDTO.getAmount());
-        if (rowsAffected == 0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fondos insuficientes en la cuenta de origen");
+        if (transactionDTO.getProductOriginType() == ProductOriginType.ACCOUNT) {
+            // Origen es una cuenta bancaria
+            int rowsAffected = accountRepository.decreaseBalanceIfSufficient(transactionDTO.getOriginAccountId(), transactionDTO.getAmount());
+            if (rowsAffected == 0) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fondos insuficientes en la cuenta de origen");
+            }
+        } else if (transactionDTO.getProductOriginType() == ProductOriginType.CARD) {
+            // Origen es una tarjeta
+            CardRequestDTO card = cardFeignClient.getCardById(transactionDTO.getProductOriginId()).getBody();
+            if (card == null) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarjeta no encontrada");
+            }
+
+            if (card.getCardType() == CardType.CREDIT) {
+                // Verificar límite de crédito disponible
+                sufficientFunds = card.getCreditLimit().compareTo(transactionDTO.getAmount()) >= 0;
+                if (!sufficientFunds) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Límite de crédito insuficiente");
+                }
+                // Debitar del límite de crédito
+                cardFeignClient.decreaseCreditLimit(card.getId(), transactionDTO.getAmount());
+            } else if (card.getCardType() == CardType.DEBIT) {
+                // Verificar saldo disponible
+                sufficientFunds = card.getBalance().compareTo(transactionDTO.getAmount()) >= 0;
+                if (!sufficientFunds) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Saldo insuficiente en la tarjeta de débito");
+                }
+                // Debitar del saldo de la tarjeta
+                cardFeignClient.decreaseDebitCardBalance(card.getId(), transactionDTO.getAmount());
+            }
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de origen del producto no soportado");
         }
 
         // 2. Aumentar Balance en la Cuenta de Destino
-        rowsAffected = accountRepository.increaseBalance(transactionDTO.getDestinationAccountId(), transactionDTO.getAmount());
+        int rowsAffected = accountRepository.increaseBalance(transactionDTO.getDestinationAccountId(), transactionDTO.getAmount());
         if (rowsAffected == 0) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al aumentar el balance en la cuenta de destino");
         }
@@ -102,6 +153,9 @@ public class TransactionClientService {
         // 3. Transacción exitosa
         System.out.println("Transacción exitosa");
     }
+
+
+
     private void validateDateAndDescription (TransactionDTO transactionDTO){
 
         // Fecha: Si no se proporciona, se asigna la fecha y hora actual.

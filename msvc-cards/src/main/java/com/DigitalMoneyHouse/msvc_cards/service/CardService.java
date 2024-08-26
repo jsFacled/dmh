@@ -8,10 +8,14 @@ import com.DigitalMoneyHouse.msvc_cards.models.dto.CardRequestDTO;
 import com.DigitalMoneyHouse.msvc_cards.models.entity.Card;
 import com.DigitalMoneyHouse.msvc_cards.models.enums.CardType;
 import com.DigitalMoneyHouse.msvc_cards.repository.ICardRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.web.server.ResponseStatusException;
+
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -107,4 +111,26 @@ public class CardService {
 public String getNumberById(Long cardId){
         return cardRepository.getNumberById(cardId);
 }
+
+    @Transactional
+    public void decreaseCreditLimit(Long cardId, BigDecimal amount) {
+        int rowsAffected = cardRepository.decreaseCreditLimitIfSufficient(cardId, amount);
+        if (rowsAffected == 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Límite de crédito insuficiente o tarjeta no encontrada");
+        }
+    }
+
+    @Transactional
+    public void decreaseDebitCardBalance(Long cardId, BigDecimal amount) {
+        int rowsAffected = cardRepository.decreaseBalanceIfSufficient(cardId, amount);
+        if (rowsAffected == 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Saldo insuficiente o tarjeta no encontrada");
+        }
+    }
+
+    public boolean isCardAssociatedWithAccount(Long cardId, Long accountId) {
+        return cardRepository.existsByIdAndAccountId(cardId, accountId);
+    }
+
 }
+
