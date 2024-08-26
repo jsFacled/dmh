@@ -9,6 +9,7 @@ import com.DigitalMoneyHouse.msvc_accounts.client.transactions.transactionsFeign
 import com.DigitalMoneyHouse.msvc_accounts.entity.Account;
 import com.DigitalMoneyHouse.msvc_accounts.repository.IAccountRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -33,6 +34,12 @@ public class TransactionClientService {
         this.accountRepository = accountRepository;
     }
 
+    public ResponseEntity<?> executeTransfer(TransactionDTO transactionDTO) {
+        validateTransaction(transactionDTO);
+        debitAndCreditAccounts(transactionDTO);
+
+        return transactionFeignClient.createTransaction(transactionDTO);
+    }
 
 
     private void validateTransaction(TransactionDTO transactionDTO) {
@@ -42,9 +49,6 @@ public class TransactionClientService {
             throw new IllegalArgumentException("Cuenta de origen no encontrada");
         }
 
-        // 2. Validar el tipo de transacción y el origen del producto
-        // Validar si el ID del producto de origen coincide con la cuenta de origen
-        // Validar si el ID del producto de origen coincide con el ID de la tarjeta proporcionado
 
         // 2. Validar el tipo de transacción y el origen del producto
         if (transactionDTO.getType() == TransactionType.TRANSFER_BETWEEN_ACCOUNTS) {
@@ -67,6 +71,30 @@ public class TransactionClientService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de transacción no soportado");
         }
 
+        // 3. Validar si la cuenta de destino existe
+        if (!accountRepository.existsById(transactionDTO.getDestinationAccountId())) {
+            throw new IllegalArgumentException("Cuenta de destino no encontrada");
+        }
 
     }
+
+    private void debitAndCreditAccounts(TransactionDTO transactionDTO){
+// 1. Verificar Fondos Disponibles en Origen
+        boolean isFundsSufficient = accountRepository.decreaseBalanceIfSufficient(transactionDTO.getOriginAccountId(), transactionDTO.getAmount());
+
+        if (!isFundsSufficient) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fondos insuficientes en la cuenta de origen");
+        }
+
+        // 2. Aumentar Balance en la Cuenta de Destino
+        boolean isBalanceIncreased = accountRepository.increaseBalance(transactionDTO.getDestinationAccountId(), transactionDTO.getAmount());
+
+        if (!isBalanceIncreased) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al aumentar el balance en la cuenta de destino");
+        }
+
+        // 3. Transacción exitosa
+        System.out.println("Transacción exitosa");
+    }
+
 }
