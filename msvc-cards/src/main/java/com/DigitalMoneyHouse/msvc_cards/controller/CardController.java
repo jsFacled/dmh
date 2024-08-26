@@ -63,6 +63,11 @@ private final CardService cardService;
         }
     }
 
+    @GetMapping("/{cardId}/exists")
+    Boolean existsById (@PathVariable("cardId") Long cardId){
+     return cardService.existsById(cardId);
+    }
+
     @PostMapping
     public ResponseEntity<?> createCard(@RequestBody CardCreationDTO cardDTO) {
         try {

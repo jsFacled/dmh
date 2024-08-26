@@ -29,6 +29,9 @@ public interface ICardFeignClient {
     @GetMapping("cards/{cardId}")
     ResponseEntity<CardRequestDTO> getCardById(@PathVariable("cardId") Long cardId);
 
+    @GetMapping("cards/{cardId}/exists")
+    Boolean existsById (@PathVariable("cardId") Long cardId);
+
 
 
 }

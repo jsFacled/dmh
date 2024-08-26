@@ -100,4 +100,8 @@ public class CardService {
         return cardRepository.findByNumber(number);
     }
 
+    public Boolean existsById(Long cardId) {
+    return cardRepository.existsById(cardId);
+    }
+
 }
