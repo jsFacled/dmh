@@ -33,5 +33,8 @@ public interface ICardFeignClient {
     Boolean existsById (@PathVariable("cardId") Long cardId);
 
 
+    @GetMapping("cards/{cardId}/number")
+    String getNumberById (@PathVariable("cardId") Long cardId);
+
 
 }

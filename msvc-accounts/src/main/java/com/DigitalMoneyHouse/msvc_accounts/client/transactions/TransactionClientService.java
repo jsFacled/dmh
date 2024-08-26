@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 
 @Service
@@ -23,6 +24,9 @@ public class TransactionClientService {
     private final ITransactionFeignClient transactionFeignClient;
     private final ICardFeignClient cardFeignClient;
     private final IAccountRepository accountRepository;
+
+    private ProductOriginType productOriginType;
+
     private BigDecimal originBalance;
     private BigDecimal destinationBalance;
     private Account originAccount;
@@ -52,6 +56,7 @@ public class TransactionClientService {
 
         // 2. Validar el tipo de transacción y el origen del producto
         if (transactionDTO.getType() == TransactionType.TRANSFER_BETWEEN_ACCOUNTS) {
+            productOriginType=ProductOriginType.ACCOUNT;
             if (transactionDTO.getProductOriginType() != ProductOriginType.ACCOUNT) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de origen del producto debe ser ACCOUNT para TRANSFER_BETWEEN_ACCOUNTS");
             }
@@ -60,6 +65,7 @@ public class TransactionClientService {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El ID de la cuenta de origen no coincide con el ID del producto de origen");
             }
         } else if (transactionDTO.getType() == TransactionType.RECHARGE_FROM_CARD) {
+            productOriginType = ProductOriginType.CARD;
             if (transactionDTO.getProductOriginType() != ProductOriginType.CARD) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de origen del producto debe ser CARD para RECHARGE_FROM_CARD");
             }
@@ -80,9 +86,9 @@ public class TransactionClientService {
 
     private void debitAndCreditAccounts(TransactionDTO transactionDTO){
 // 1. Verificar Fondos Disponibles en Origen
-        boolean isFundsSufficient = accountRepository.decreaseBalanceIfSufficient(transactionDTO.getOriginAccountId(), transactionDTO.getAmount());
+        boolean decreaseBalanceIfSufficient = accountRepository.decreaseBalanceIfSufficient(transactionDTO.getOriginAccountId(), transactionDTO.getAmount());
 
-        if (!isFundsSufficient) {
+        if (!decreaseBalanceIfSufficient) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fondos insuficientes en la cuenta de origen");
         }
 
@@ -95,6 +101,26 @@ public class TransactionClientService {
 
         // 3. Transacción exitosa
         System.out.println("Transacción exitosa");
+    }
+
+    private void validateDateAndDescription (TransactionDTO transactionDTO){
+        // Fecha: Si no se proporciona, se asigna la fecha y hora actual.
+
+        if (transactionDTO.getDate() == null) {
+            transactionDTO.setDate(LocalDateTime.now());
+        }
+
+        // Descripción: Si no se proporciona, generar una por defecto
+        if (transactionDTO.getDescription() == null) {
+            if(productOriginType == ProductOriginType.ACCOUNT) {
+                transactionDTO.setDescription(transactionDTO.getType().getDescription() + " de Cvu " +
+                        originAccount.getCvu() + " a Cvu" + destinationAccount.getCvu());
+            }
+            if(productOriginType == ProductOriginType.CARD) {
+                transactionDTO.setDescription(transactionDTO.getType().getDescription() + " de Card número " +
+                        cardFeignClient.getNumberById(transactionDTO.getProductOriginId()) + " a Cvu " + destinationAccount.getCvu());
+            }
+        }
     }
 
 }

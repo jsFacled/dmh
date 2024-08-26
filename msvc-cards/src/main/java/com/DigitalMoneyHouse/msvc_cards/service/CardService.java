@@ -104,4 +104,7 @@ public class CardService {
     return cardRepository.existsById(cardId);
     }
 
+public String getNumberById(Long cardId){
+        return cardRepository.getNumberById(cardId);
+}
 }

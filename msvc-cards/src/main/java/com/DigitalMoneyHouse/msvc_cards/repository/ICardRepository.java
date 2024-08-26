@@ -23,4 +23,6 @@ public interface ICardRepository extends JpaRepository<Card, Long> {
     @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM Card c WHERE c.number = :number")
     boolean existsByNumber(@Param("number") String number);
 
+    @Query("SELECT c.number FROM Card c WHERE c.id = :id")
+    String getNumberById(@Param("id") Long id);
 }

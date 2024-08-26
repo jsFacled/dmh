@@ -68,6 +68,12 @@ private final CardService cardService;
      return cardService.existsById(cardId);
     }
 
+    @GetMapping("/{cardId}/number")
+    String getNumberById (@PathVariable("cardId") Long cardId){
+        return cardService.getNumberById(cardId);
+    }
+
+
     @PostMapping
     public ResponseEntity<?> createCard(@RequestBody CardCreationDTO cardDTO) {
         try {
