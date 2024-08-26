@@ -21,10 +21,13 @@ public interface IAccountRepository extends JpaRepository<Account, Long> {
 
     @Modifying
     @Query("UPDATE Account a SET a.balance = a.balance - :amount WHERE a.id = :accountId AND a.balance >= :amount")
-    boolean decreaseBalanceIfSufficient(@Param("accountId") Long accountId, @Param("amount") BigDecimal amount);
+    int decreaseBalanceIfSufficient(@Param("accountId") Long accountId, @Param("amount") BigDecimal amount);
 
     @Modifying
     @Query("UPDATE Account a SET a.balance = a.balance + :amount WHERE a.id = :accountId")
-    boolean increaseBalance(@Param("accountId") Long accountId, @Param("amount") BigDecimal amount);
+    int increaseBalance(@Param("accountId") Long accountId, @Param("amount") BigDecimal amount);
+
+    @Query("SELECT a.cvu FROM Account a WHERE a.id = :id")
+    String getCvuById(@Param("id") Long id);
 
 }

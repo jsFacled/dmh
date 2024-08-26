@@ -26,14 +26,14 @@ private final TransactionClientService transactionClientService;
     }
 
     @PostMapping("/transactions")
-    public ResponseEntity<?> createTransaction(
+    public ResponseEntity<?> executeTransfer(
             @PathVariable Long accountId,
             @RequestBody TransactionDTO transactionDTO) {
 
         // Ensure that the accountId in the transactionDTO matches the path variable
         transactionDTO.setOriginAccountId(accountId);
 
-        return transactionClientService.createTransaction(transactionDTO);
+        return transactionClientService.executeTransfer(transactionDTO);
     }
 
     @GetMapping("activity")
