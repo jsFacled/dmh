@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: msvc-accounts
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/dmh_bd1
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true # Configuración adicional
+    hibernate:
+      ddl-auto: update # Definición de datos al iniciar la app
+    show-sql: true # Configuración adicional
+
+  doc:
+    swagger-ui:
+      path: /swagger-ui.html # swagger-ui custom path
+    api-docs:
+      path: /api-docs # /api-docs endpoint custom path
+
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: full
+
+server:
+  port: 8083
