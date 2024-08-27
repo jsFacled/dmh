@@ -1,6 +1,6 @@
 package com.DigitalMoneyHouse.msvc_accounts.client.transactions.transactionsFeign;
 
-import com.DigitalMoneyHouse.msvc_accounts.client.transactions.models.TransactionDTO;
+import com.DigitalMoneyHouse.msvc_accounts.client.transactions.models.dto.TransactionDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,4 +18,8 @@ public interface ITransactionFeignClient {
 
     @GetMapping("/transactions/{id}")
     ResponseEntity<TransactionDTO> getTransactionById(@PathVariable("id") Long id);
+
+    //Este cliente llama al endpoint en ms-transactions y devuelve una lista de destinationAccountId.
+    @GetMapping("/transactions/last-five-destinations/{accountId}")
+    List<Long> getLastFiveDistinctDestinationsByAccountId(@PathVariable("accountId") Long accountId);
 }

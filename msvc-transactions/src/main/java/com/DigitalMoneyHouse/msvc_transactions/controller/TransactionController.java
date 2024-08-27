@@ -20,6 +20,13 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
+    @GetMapping("/last-five-destinations/{accountId}")
+    public ResponseEntity<?> getLastFiveDistinctDestinationsByAccountId(
+            @PathVariable("accountId") Long accountId) {
+        List<Long> destinationAccountIds = transactionService.findDistinctDestinationAccountIds(accountId);
+        return ResponseEntity.ok(destinationAccountIds);
+    }
+
     @GetMapping("/last-five/{account_id}")
     public ResponseEntity<List<TransactionDTO>> getLastFiveTransactionsByAccountId(@PathVariable Long account_id) {
         List<TransactionDTO> transactions = transactionService.findLastFiveTransactionsByAccountId(account_id);

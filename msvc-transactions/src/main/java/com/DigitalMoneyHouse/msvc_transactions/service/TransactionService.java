@@ -10,6 +10,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
+
 
 import java.util.List;
 import java.util.Optional;
@@ -97,6 +103,12 @@ public class TransactionService {
             throw new NotFoundException("Transaction not found with id " + id);
         }
     }
+
+    public List<Long> findDistinctDestinationAccountIds(Long accountId) {
+        Pageable pageable = PageRequest.of(0, 5); // Limitar a 5 resultados
+        return transactionRepository.findDistinctDestinationAccountIdsByAccountId(accountId, pageable);
+    }
+
 
     public void deleteTransaction(Long id) {
         transactionRepository.deleteById(id);

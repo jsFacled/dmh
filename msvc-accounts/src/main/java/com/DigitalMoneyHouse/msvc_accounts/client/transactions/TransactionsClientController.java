@@ -1,7 +1,8 @@
 package com.DigitalMoneyHouse.msvc_accounts.client.transactions;
 
 
-import com.DigitalMoneyHouse.msvc_accounts.client.transactions.models.TransactionDTO;
+import com.DigitalMoneyHouse.msvc_accounts.client.transactions.models.dto.DestinationAccountInfoDTO;
+import com.DigitalMoneyHouse.msvc_accounts.client.transactions.models.dto.TransactionDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -53,5 +54,10 @@ private final TransactionClientService transactionClientService;
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error interno del servidor desde controller feign");
         }
+    }
+
+    @GetMapping("/transferences")
+    public List<DestinationAccountInfoDTO> getLastFiveRecipients(@PathVariable Long accountId) {
+        return transactionClientService.getLastFiveRecipientsInfo(accountId);
     }
 }

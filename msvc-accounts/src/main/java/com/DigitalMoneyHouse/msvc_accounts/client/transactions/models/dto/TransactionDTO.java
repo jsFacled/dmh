@@ -1,4 +1,4 @@
-package com.DigitalMoneyHouse.msvc_accounts.client.transactions.models;
+package com.DigitalMoneyHouse.msvc_accounts.client.transactions.models.dto;
 
 import com.DigitalMoneyHouse.msvc_accounts.client.transactions.models.enums.ProductOriginType;
 import com.DigitalMoneyHouse.msvc_accounts.client.transactions.models.enums.TransactionType;

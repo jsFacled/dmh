@@ -2,10 +2,10 @@ package com.DigitalMoneyHouse.msvc_accounts.client.transactions;
 
 
 import com.DigitalMoneyHouse.msvc_accounts.client.cards.cardsFeign.ICardFeignClient;
-import com.DigitalMoneyHouse.msvc_accounts.client.cards.models.CardDTO;
 import com.DigitalMoneyHouse.msvc_accounts.client.cards.models.CardRequestDTO;
 import com.DigitalMoneyHouse.msvc_accounts.client.cards.models.CardType;
-import com.DigitalMoneyHouse.msvc_accounts.client.transactions.models.TransactionDTO;
+import com.DigitalMoneyHouse.msvc_accounts.client.transactions.models.dto.DestinationAccountInfoDTO;
+import com.DigitalMoneyHouse.msvc_accounts.client.transactions.models.dto.TransactionDTO;
 import com.DigitalMoneyHouse.msvc_accounts.client.transactions.models.enums.ProductOriginType;
 import com.DigitalMoneyHouse.msvc_accounts.client.transactions.models.enums.TransactionType;
 import com.DigitalMoneyHouse.msvc_accounts.client.transactions.transactionsFeign.ITransactionFeignClient;
@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -189,5 +190,18 @@ public class TransactionClientService {
 
     public ResponseEntity<TransactionDTO> getTransactionById(Long transactionId) {
         return transactionFeignClient.getTransactionById(transactionId);
+    }
+
+    public List<DestinationAccountInfoDTO> getLastFiveRecipientsInfo(Long accountId) {
+        // Obtener los últimos 5 destinationAccountId
+        List<Long> destinationAccountIds = transactionFeignClient.getLastFiveDistinctDestinationsByAccountId(accountId);
+
+        // Consultar en el repositorio de Accounts los CVU y alias de esos destinationAccountIds
+        return destinationAccountIds.stream()
+                .map(id -> {
+                    Account account = accountRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Account not found: " + id));
+                    return new DestinationAccountInfoDTO(account.getId(),account.getCvu(), account.getAlias());
+                })
+                .collect(Collectors.toList());
     }
 }
