@@ -9,7 +9,7 @@ public class MsvcCardsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MsvcCardsApplication.class, args);
 		System.out.println();
-		System.out.println("// * * // * * // * * // * * // * * // * * Ms-Cards iniciando // * * // * * // * * // * * // * * // * * ");
+		System.out.println("// * * // * * // * * // * * // * * // * *   -  -  -  -  -  -  -  Ms-Cards iniciando   -  -  -  -  -  -  -  // * * // * * // * * // * * // * * // * * ");
 		System.out.println();
 	}
 

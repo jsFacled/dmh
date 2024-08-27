@@ -17,11 +17,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/accounts/{accountId}/cards")
-public class CardsController {
+public class CardsClientController {
 
-   private final CardsService cardsService;
+   private final CardsClientService cardsService;
 
-    public CardsController(ICardFeignClient cardFeignClient, CardsService cardsService) {
+    public CardsClientController(CardsClientService cardsService) {
 
         this.cardsService = cardsService;
     }

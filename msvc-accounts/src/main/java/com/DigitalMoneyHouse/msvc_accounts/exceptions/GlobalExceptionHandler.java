@@ -1,6 +1,7 @@
 package com.DigitalMoneyHouse.msvc_accounts.exceptions;
 
 import com.DigitalMoneyHouse.msvc_accounts.client.cards.exceptions.CardAlreadyExistsException;
+import com.DigitalMoneyHouse.msvc_accounts.client.cards.exceptions.CardNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -11,9 +12,10 @@ import org.slf4j.LoggerFactory;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
- * Maneja las excepciones globales en msvc_accounts.
+ * Maneja las excepciones globales en msvc_accounts y también las relacionadas a client.cards y client.transactions.
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -34,6 +36,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDTO> handleCardAlreadyExistsException(CardAlreadyExistsException ex) {
         logger.error("Error: " + ex.getMessage(), ex);
         ErrorResponseDTO errorResponse = new ErrorResponseDTO("La tarjeta ya está asociada a otra cuenta", "CARD_ALREADY_EXISTS");
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+    }
+
+    // Maneja excepciones cuando la tarjeta no se encuentra.
+    @ExceptionHandler(CardNotFoundException.class)
+    public ResponseEntity<ErrorResponseDTO> handleCardAlreadyExistsException(CardNotFoundException ex) {
+        logger.error("Error: " + ex.getMessage(), ex);
+        ErrorResponseDTO errorResponse = new ErrorResponseDTO("La tarjeta no se encuentra", "CARD_NOT_FOUND");
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
     }
 
@@ -62,12 +72,20 @@ public class GlobalExceptionHandler {
     }
 
 
+    // Maneja excepciones lanzadas por Feign (ResponseStatusException)
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<ErrorResponseDTO> handleResponseStatusException(ResponseStatusException ex) {
+        logger.error("Error desde ms-transactions: " + ex.getMessage(), ex);
+        ErrorResponseDTO errorResponse = new ErrorResponseDTO(ex.getReason(), ex.getStatusCode().toString());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponse);
+    }
+
     // Maneja excepciones generales.
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDTO> handleGenericException(Exception ex) {
-        logger.error("Error no manejado: " + ex.getMessage(), ex);
+        logger.error("Ms-Accounts. Error no manejado: " + ex.getMessage(), ex);
         // Respuesta 500 (Internal Server Error) con un mensaje genérico.
-        ErrorResponseDTO errorResponse = new ErrorResponseDTO("Error interno del servidor accounts", "INTERNAL_SERVER_ERROR");
+        ErrorResponseDTO errorResponse = new ErrorResponseDTO("Ms-Accounts. Error interno del servidor accounts", "INTERNAL_SERVER_ERROR");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
 }
