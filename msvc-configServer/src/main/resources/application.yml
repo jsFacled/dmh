@@ -1,0 +1,12 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: msvc-configServer
+  cloud:
+    config:
+      server:
+        bootstrap: false
+        native:
+          search-locations: classpath:/config # Indica que use archivos locales en el directorio /config dentro del classpath

@@ -1,0 +1,40 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: msvc-gateway
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+
+      routes:
+        - id: accounts
+          uri: lb://MSVC-ACCOUNTS
+          predicates:
+            - Path=/accounts/**
+        - id: users
+          uri: lb://MSVC-USERS
+          predicates:
+            - Path=/users/**
+        - id: usersAccountsManager
+          uri: lb://MSVC-USERSACCOUNTSMANAGER
+          predicates:
+            - Path=/manager/**
+
+    config:
+      enabled: false
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /api-docs
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true

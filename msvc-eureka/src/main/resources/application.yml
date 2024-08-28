@@ -1,17 +1,24 @@
-server:
-  port: 8761
-
 spring:
   application:
     name: msvc-eureka
   config:
     import: optional:configserver:http://localhost:8888
 
+  cloud:
+    config:
+      enabled: false # Deshabilito el config server para ir probando
+
+server:
+  port: 8761 # Configuración del puerto en el que correrá Eureka Server
+
 eureka:
-  instance:
-    hostname: localhost
+  server:
+    # Configuraciones específicas del servidor Eureka
+    enable-self-preservation: false # Opcional, para deshabilitar la preservación automática
+    eviction-interval-timer-in-ms: 5000 # Opcional, intervalo de limpieza de instancias en milisegundos
+
   client:
-    register-with-eureka: false
-    fetch-registry: false
+    register-with-eureka: false # El servidor Eureka no necesita registrarse a sí mismo
+    fetch-registry: false # El servidor Eureka no necesita obtener el registro de otros servicios
     service-url:
-      defaultZone: http://localhost:${server.port}/eureka/
+      defaultZone: http://localhost:8761/eureka/ # URL del servidor Eureka

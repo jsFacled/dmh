@@ -26,5 +26,5 @@ server:
 
 eureka:
   client:
-    register-with-eureka: false # Deshabilitar la suscripción a Eureka
-    fetch-registry: false
+    register-with-eureka: true
+    fetch-registry: true

@@ -1,6 +1,13 @@
+
+server:
+  port: 8083
+
 spring:
   application:
     name: msvc-accounts
+
+  config:
+    import: optional:configserver:http://localhost:8888
 
   datasource:
     url: jdbc:mysql://localhost:3306/dmh_bd1
@@ -12,16 +19,22 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
-        format_sql: true # Configuración adicional
+        format_sql: true # Configuraciï¿½n adicional
     hibernate:
-      ddl-auto: update # Definición de datos al iniciar la app
-    show-sql: true # Configuración adicional
+      ddl-auto: update # Definiciï¿½n de datos al iniciar la app
+    show-sql: true # Configuraciï¿½n adicional
+
+  cloud:
+    config:
+      enabled: false # Deshabilita el Config Server
+      import-check:
+        enabled: false # Deshabilita la verificaciÃ³n de importaciÃ³n
 
   doc:
     swagger-ui:
-      path: /swagger-ui.html # swagger-ui custom path
+      path: /swagger-ui.html
     api-docs:
-      path: /api-docs # /api-docs endpoint custom path
+      path: /api-docs
 
 feign:
   client:
@@ -29,5 +42,7 @@ feign:
       default:
         loggerLevel: full
 
-server:
-  port: 8083
+eureka:
+  client:
+    register-with-eureka: true # Deshabilitar la suscripciÃ³n a Eureka
+    fetch-registry: true
