@@ -1,36 +1,9 @@
 spring:
   application:
     name: msvc-cards
+  config:
+    import: optional:configserver:http://localhost:8888
 
   cloud:
     config:
-      enabled: false # Desabilito el config server para ir probando
-
-  datasource:
-    url: jdbc:mysql://localhost:3306/dmh_bd1
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: update # Alternativa: create-drop
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect
-
-server:
-  port: 8085
-
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html # swagger-ui custom path
-  api-docs:
-    path: /api-docs # /api-docs endpoint custom path
+      enabled: true # Desabilito el config server para ir probando

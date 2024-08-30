@@ -8,5 +8,13 @@ spring:
     config:
       server:
         bootstrap: false
-        native:
-          search-locations: classpath:/config # Indica que use archivos locales en el directorio /config dentro del classpath
+       # native:
+        #  search-locations: classpath:/config # Indica que use archivos locales en el directorio /config dentro del classpath
+        git:
+          uri: https://github.com/jsFacled/dmh-configServer-repo
+
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true

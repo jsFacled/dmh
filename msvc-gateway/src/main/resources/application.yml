@@ -28,9 +28,12 @@ spring:
     config:
       enabled: false
 
+# swagger-ui custom path
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+
+  # /api-docs endpoint custom path
   api-docs:
     path: /api-docs
 

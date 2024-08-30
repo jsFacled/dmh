@@ -30,11 +30,15 @@ spring:
       import-check:
         enabled: false # Deshabilita la verificación de importación
 
-  doc:
-    swagger-ui:
-      path: /swagger-ui.html
-    api-docs:
-      path: /api-docs
+
+# swagger-ui custom path
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+  # /api-docs endpoint custom path
+  api-docs:
+    path: /api-docs
 
 feign:
   client:
@@ -44,5 +48,5 @@ feign:
 
 eureka:
   client:
-    register-with-eureka: true # Deshabilitar la suscripción a Eureka
+    register-with-eureka: true
     fetch-registry: true
