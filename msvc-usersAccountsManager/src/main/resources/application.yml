@@ -1,34 +1,6 @@
 spring:
   application:
     name: msvc-usersAccountsManager
-  datasource:
-    url: jdbc:mysql://localhost:3306/dmh_bd1
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect
-  cloud:
-    config:
-      enabled: false
-
-server:
-  port: 8081
-
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-  api-docs:
-    path: /api-docs
+  config:
+    import: optional:configserver:http://localhost:8888
 

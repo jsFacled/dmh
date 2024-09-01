@@ -11,7 +11,7 @@ spring:
        # native:
         #  search-locations: classpath:/config # Indica que use archivos locales en el directorio /config dentro del classpath
         git:
-          uri: https://github.com/jsFacled/dmh-configServer-repo
+          uri: https://github.com/jsFacled/dmh-configServer-repo.git
 
 
 eureka:

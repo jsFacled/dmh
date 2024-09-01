@@ -37,6 +37,9 @@ public class SecurityConfig {
                                         "auth/logout",
                                         "manager/hello",
                                         "manager/register",
+                                        "swagger-ui/**",
+                                        "v3/api-docs",
+                                        "actuator/**",
 
                                         "http://localhost:8082/users").permitAll()
 
