@@ -3,7 +3,3 @@ spring:
     name: msvc-cards
   config:
     import: optional:configserver:http://localhost:8888
-
-  cloud:
-    config:
-      enabled: true # Desabilito el config server para ir probando

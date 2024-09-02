@@ -1,10 +1,7 @@
 package com.DigitalMoneyHouse.msvc_users.controller;
 
 
-import com.DigitalMoneyHouse.msvc_users.dto.LoginRequestDTO;
-import com.DigitalMoneyHouse.msvc_users.dto.UserDTO;
-import com.DigitalMoneyHouse.msvc_users.dto.UserRegisteredResponseDTO;
-import com.DigitalMoneyHouse.msvc_users.dto.UserResponseDTO;
+import com.DigitalMoneyHouse.msvc_users.dto.*;
 import com.DigitalMoneyHouse.msvc_users.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +24,13 @@ public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
+    @GetMapping("/hello")
+    public ResponseEntity<?> hello()    {
+        System.out.println(" -  -  -  ** -  -  - // -  - Desde ms-users/hello: dice Hola mundo!! /*  - - - - // ** // **.");
+        return ResponseEntity.ok(" - - - ¡¡Hola Mundo!! Soy ms-users!!!  -  -  - ");
+    }
+
+
     @PostMapping("/create")
     public ResponseEntity<UserRegisteredResponseDTO> createUser(@Validated @RequestBody UserDTO userDTO) {
         UserRegisteredResponseDTO createdUser = userService.createUser(userDTO);
@@ -42,7 +46,16 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<UserEmailYPasswordDTO> getUserByEmail(@PathVariable String email) {
 
+        UserEmailYPasswordDTO uEyPdto = userService.getUserByEmail(email);
+        if (uEyPdto != null) {
+            return ResponseEntity.ok(uEyPdto);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+/*
    @GetMapping("/email")
    //Se solicita con Params --> http://localhost:8080/users/email?email=maub@gmail.com
    public ResponseEntity<UserResponseDTO> getUserByEmail(@RequestParam String email) {
@@ -53,6 +66,7 @@ public class UserController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
+*/
 
     @GetMapping("all")
     public ResponseEntity<List<UserResponseDTO>> getAllUsers() {

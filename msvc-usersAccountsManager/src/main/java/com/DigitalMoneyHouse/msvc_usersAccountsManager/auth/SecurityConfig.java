@@ -44,6 +44,7 @@ public class SecurityConfig {
                                         "http://localhost:8082/users").permitAll()
 
                                 .anyRequest().authenticated()
+
                 )
 
                 .csrf().disable()

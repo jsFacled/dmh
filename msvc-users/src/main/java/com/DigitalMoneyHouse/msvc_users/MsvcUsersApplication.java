@@ -8,7 +8,9 @@ public class MsvcUsersApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MsvcUsersApplication.class, args);
+		System.out.println(" * *                                                                            * * ");
 		System.out.println(" - - - - - - - - - - Iniciando ms-Users - - - - - - - - - - - - - - - - - - - --");
+		System.out.println(" * *                                                                            * * ");
 	}
 
 }

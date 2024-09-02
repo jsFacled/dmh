@@ -1,51 +1,8 @@
 server:
   port: 8083
-
 spring:
   application:
     name: msvc-accounts
 
   config:
     import: optional:configserver:http://localhost:8888
-
-  datasource:
-    url: jdbc:mysql://localhost:3306/dmh_bd1
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
-        format_sql: true # Configuraci�n adicional
-    hibernate:
-      ddl-auto: update # Definici�n de datos al iniciar la app
-    show-sql: true # Configuraci�n adicional
-
-  cloud:
-    config:
-      enabled: false # Deshabilita el Config Server
-      import-check:
-        enabled: false # Deshabilita la verificación de importación
-
-
-# swagger-ui custom path
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-
-  # /api-docs endpoint custom path
-  api-docs:
-    path: /api-docs
-
-feign:
-  client:
-    config:
-      default:
-        loggerLevel: full
-
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true

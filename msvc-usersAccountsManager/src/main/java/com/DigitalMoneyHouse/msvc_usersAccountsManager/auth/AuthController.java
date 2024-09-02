@@ -26,7 +26,7 @@ public class AuthController {
 
     @GetMapping("/hello")
     public String index2() {
-        return "  *  *  *  *  *  Helloooo desde auth en ms-manager ! ! ! *  *  *";
+        return "  *  *  *  *  *  Helloooo desde auth en ms-uaM. Tu jwt fue autenticado con éxito ! ! ! *  *  *";
     }
 
 

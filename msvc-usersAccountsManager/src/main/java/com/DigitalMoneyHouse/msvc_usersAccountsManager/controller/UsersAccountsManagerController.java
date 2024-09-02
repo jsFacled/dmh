@@ -23,7 +23,8 @@ public class UsersAccountsManagerController {
     }
 
     @GetMapping("/hello")
-    public ResponseEntity<?> index() {
+    public ResponseEntity<?> index()    {
+        System.out.println(" -  -  -  ** -  -  - // -  - Desde ms-uaM manager/hello: dice Hola mundo!! /*  - - - - // ** // **.");
         return ResponseEntity.ok("Hola Mundo!! Soy ms-Manager!!!");
     }
 
