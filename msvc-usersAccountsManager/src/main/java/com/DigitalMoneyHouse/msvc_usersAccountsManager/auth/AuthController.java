@@ -30,7 +30,7 @@ public class AuthController {
     }
 
 
-    @CrossOrigin("http://localhost:8080")
+    @CrossOrigin("http://localhost:8080, http://localhost:8090")
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequest) {
         try {
