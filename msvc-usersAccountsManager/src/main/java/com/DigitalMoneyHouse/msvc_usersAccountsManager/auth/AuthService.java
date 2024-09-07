@@ -39,6 +39,23 @@ public class AuthService {
     }
 
 
+    // Método para validar un token JWT
+    public boolean validateToken(String authorizationHeader) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String token = authorizationHeader.substring(7);
 
+            try {
+                // Validar el token utilizando JwtUtil
+                return jwtUtil.validateToken(token);
+            } catch (Exception e) {
+                System.out.println("Error al validar el token: " + e.getMessage());
+                return false;
+            }
+        } else {
+            // Si no se proporciona un token válido
+            System.out.println("Encabezado Authorization faltante o inválido");
+            return false;
+        }
+    }
 }
 

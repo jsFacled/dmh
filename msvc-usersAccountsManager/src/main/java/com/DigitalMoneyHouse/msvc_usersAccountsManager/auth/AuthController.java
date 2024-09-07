@@ -54,4 +54,17 @@ public class AuthController {
         }
     }
 
+    // Endpoint para validar el token JWT
+    @CrossOrigin("http://localhost:8080, http://localhost:8090")
+    @GetMapping("/validate")
+    public ResponseEntity<String> validateToken(@RequestHeader("Authorization") String authorizationHeader) {
+        boolean isValid = authService.validateToken(authorizationHeader);
+
+        if (isValid) {
+            return ResponseEntity.ok("Token válido");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token inválido");
+        }
+    }
+
 }
