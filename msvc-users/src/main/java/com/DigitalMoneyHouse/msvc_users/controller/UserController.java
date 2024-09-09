@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @RestController
@@ -54,6 +55,17 @@ public class UserController {
             return ResponseEntity.ok(uEyPdto);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    @GetMapping("/userIdFromEmail")
+    public ResponseEntity<?> getUserIdByEmail(@RequestParam String email) {
+        Optional<Long> userId = userService.getUserIdByEmail(email).describeConstable();
+
+        if (userId.isPresent()) {
+            return ResponseEntity.ok(userId.get());
+        } else {
+            return ResponseEntity.status(404).body("User not found");
+        }
     }
 /*
    @GetMapping("/email")

@@ -135,6 +135,10 @@ public class UserService {
         return password;
     }
 
+    public Long getUserIdByEmail(String email) {
+        return userRepository.getUserIdByUserEmail(email).orElse(null);
+    }
+
 
     public boolean validarSinEncriptar(LoginRequestDTO loginRequestDTO) {
         System.out.println("* * Desde ms-users * * en UserService INICIO en validarSinEncriptar()");

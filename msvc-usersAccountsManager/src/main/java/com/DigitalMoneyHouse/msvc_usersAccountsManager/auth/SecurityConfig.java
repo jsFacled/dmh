@@ -37,6 +37,7 @@ public class SecurityConfig {
                                         "auth/logout",
                                         "manager/hello",
                                         "manager/register",
+                                        "manager/validate/{accountId}/{userId}",
                                         "swagger-ui/**",
                                         "v3/api-docs",
                                         "actuator/**",

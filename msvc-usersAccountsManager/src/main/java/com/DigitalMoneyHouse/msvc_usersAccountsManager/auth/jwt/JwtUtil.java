@@ -36,6 +36,7 @@ public class JwtUtil {
         long currentTimeMillis = System.currentTimeMillis();
         return Jwts.builder()
                 .setSubject(email)
+                //.claim("userId", userId) // Agrega el ID del usuario como una reclamación
                 .setIssuedAt(new Date(currentTimeMillis))
                 .setExpiration(new Date(currentTimeMillis + 600000)) //10 minutos
                 //.setExpiration(new Date(currentTimeMillis + 1000 * 60 * 60)) // 1 hora de expiración
@@ -54,6 +55,9 @@ public class JwtUtil {
 
     public String extractUsername(String token) {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getSubject();
+    }
+    public String extractUserId(String token) {
+        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().get("userId", String.class);
     }
 
     public Date extractExpiration(String token) {
@@ -123,3 +127,4 @@ public class JwtUtil {
     }
 
 }
+

@@ -42,6 +42,13 @@ public class UsersAccountsManagerController {
         }
     }
 
+    @GetMapping("/validate/{accountId}/{userId}")
+    public ResponseEntity<Boolean> validateUserForAccount(@PathVariable Long accountId, @PathVariable Long userId) {
+        boolean hasAccess = usersAccountsManagerService.isAuthorizedForAccount(accountId, userId);
+        return ResponseEntity.ok(hasAccess);
+    }
+
+
 
 
 

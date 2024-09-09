@@ -9,5 +9,7 @@ public interface IUsersAccountsManagerService {
 
     ResponseEntity<?> registrarUserAccount(UserDTO userDTO);
 
+    boolean isAuthorizedForAccount(Long accountId, Long userId);
+
 
 }
