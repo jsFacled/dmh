@@ -2,10 +2,7 @@ package com.DigitalMoneyHouse.msvc_usersAccountsManager.client;
 
 
 import com.DigitalMoneyHouse.msvc_usersAccountsManager.auth.autModels.LoginRequestDTO;
-import com.DigitalMoneyHouse.msvc_usersAccountsManager.dto.UserDTO;
-import com.DigitalMoneyHouse.msvc_usersAccountsManager.dto.UserRegisteredResponseDTO;
-import com.DigitalMoneyHouse.msvc_usersAccountsManager.dto.UserRequestDTO;
-import com.DigitalMoneyHouse.msvc_usersAccountsManager.dto.UserResponseDTO;
+import com.DigitalMoneyHouse.msvc_usersAccountsManager.dto.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +27,11 @@ public interface IUserClient {
 
 
     @GetMapping("/email/{email}")
+    ResponseEntity<UserEmailYPasswordDTO> getUserByEmail(@PathVariable("email") String email);
+
+    /*
+    @GetMapping("/email/{email}")
     ResponseEntity<UserRequestDTO> findByEmail(@PathVariable("email") String email);
+     */
 
 }

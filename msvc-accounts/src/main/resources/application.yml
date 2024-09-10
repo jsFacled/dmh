@@ -1,0 +1,8 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: msvc-accounts
+
+  config:
+    import: optional:configserver:http://localhost:8888

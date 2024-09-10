@@ -26,11 +26,11 @@ public class AuthController {
 
     @GetMapping("/hello")
     public String index2() {
-        return "  *  *  *  *  *  Helloooo desde auth en ms-manager ! ! ! *  *  *";
+        return "  *  *  *  *  *  Helloooo desde auth en ms-uaM. Tu jwt fue autenticado con éxito ! ! ! *  *  *";
     }
 
 
-    @CrossOrigin("http://localhost:8080")
+    @CrossOrigin("http://localhost:8080, http://localhost:8090")
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequest) {
         try {
@@ -51,6 +51,19 @@ public class AuthController {
             return ResponseEntity.ok("Logout successful");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred during logout");
+        }
+    }
+
+    // Endpoint para validar el token JWT
+    @CrossOrigin("http://localhost:8080, http://localhost:8090")
+    @GetMapping("/validate")
+    public ResponseEntity<String> validateToken(@RequestHeader("Authorization") String authorizationHeader) {
+        boolean isValid = authService.validateToken(authorizationHeader);
+
+        if (isValid) {
+            return ResponseEntity.ok("Token válido");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token inválido");
         }
     }
 

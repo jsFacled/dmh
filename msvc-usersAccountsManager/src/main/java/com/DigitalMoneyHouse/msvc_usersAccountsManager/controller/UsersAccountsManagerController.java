@@ -23,7 +23,8 @@ public class UsersAccountsManagerController {
     }
 
     @GetMapping("/hello")
-    public ResponseEntity<?> index() {
+    public ResponseEntity<?> index()    {
+        System.out.println(" -  -  -  ** -  -  - // -  - Desde ms-uaM manager/hello: dice Hola mundo!! /*  - - - - // ** // **.");
         return ResponseEntity.ok("Hola Mundo!! Soy ms-Manager!!!");
     }
 
@@ -40,6 +41,13 @@ public class UsersAccountsManagerController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error inesperado: " + e.getMessage());
         }
     }
+
+    @GetMapping("/validate/{accountId}/{userId}")
+    public ResponseEntity<Boolean> validateUserForAccount(@PathVariable Long accountId, @PathVariable Long userId) {
+        boolean hasAccess = usersAccountsManagerService.isAuthorizedForAccount(accountId, userId);
+        return ResponseEntity.ok(hasAccess);
+    }
+
 
 
 

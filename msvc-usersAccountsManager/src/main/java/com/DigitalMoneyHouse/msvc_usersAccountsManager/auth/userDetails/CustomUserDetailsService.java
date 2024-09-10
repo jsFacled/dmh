@@ -1,6 +1,7 @@
 package com.DigitalMoneyHouse.msvc_usersAccountsManager.auth.userDetails;
 
 import com.DigitalMoneyHouse.msvc_usersAccountsManager.client.IUserClient;
+import com.DigitalMoneyHouse.msvc_usersAccountsManager.dto.UserEmailYPasswordDTO;
 import com.DigitalMoneyHouse.msvc_usersAccountsManager.dto.UserRequestDTO;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,10 +22,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserRequestDTO user = userClient.findByEmail(username).getBody(); // Busca por email, que se usa como username
-        if (user == null) {
+        UserEmailYPasswordDTO uEyPdto = userClient.getUserByEmail(username).getBody(); // Busca por email, que se usa como username
+        if (uEyPdto == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>()); // Pasa un conjunto vacío de authorities al no usar roles
+        return new org.springframework.security.core.userdetails.User(uEyPdto.getEmail(), uEyPdto.getPassword(), new ArrayList<>()); // Pasa un conjunto vacío de authorities al no usar roles
     }
 }
