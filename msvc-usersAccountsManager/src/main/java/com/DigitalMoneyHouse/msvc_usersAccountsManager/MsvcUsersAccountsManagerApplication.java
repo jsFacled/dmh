@@ -10,8 +10,9 @@ public class MsvcUsersAccountsManagerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MsvcUsersAccountsManagerApplication.class, args);
-
+		System.out.println(" * *                                                                            * * ");
 		System.out.println(" *// * // * // * // * // * // *  - - - - - - - - - -  Iniciando ms-Manager  - - - - - - - - - - - - - - - - - - - --*// * // * // * // * // * // *");
+		System.out.println(" * *                                                                            * * ");
 	}
 
 }

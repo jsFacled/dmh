@@ -59,12 +59,12 @@ public class UserService {
         return user.map(userMapper::toUserResponseDTO).orElse(null);
     }
 
-    public UserResponseDTO getUserByEmail(String email) {
+    public UserEmailYPasswordDTO getUserByEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
 
         if (user.isPresent()) {
             System.out.println(" * * * * Usuario encontrado: " + user.get());
-            return userMapper.toUserResponseDTO(user.get());
+            return userMapper.toUserEmailYPasswordDTO(user.get());
         } else {
             System.out.println(" / * * * * * Usuario no encontrado.");
             throw new UserNotFoundException("Usuario con email " + email + " no encontrado.");
@@ -133,6 +133,10 @@ public class UserService {
     private String encryptPassword(String password) {
         passwordEncoder.encode(password);
         return password;
+    }
+
+    public Long getUserIdByEmail(String email) {
+        return userRepository.getUserIdByUserEmail(email).orElse(null);
     }
 
 

@@ -37,7 +37,7 @@ private final TransactionClientService transactionClientService;
         return transactionClientService.executeTransfer(transactionDTO);
     }
 
-    @GetMapping("activity")
+    @GetMapping("/activity")
     public ResponseEntity<List<TransactionDTO>> getTransactionsByAccountId(
             @PathVariable Long accountId) {
 

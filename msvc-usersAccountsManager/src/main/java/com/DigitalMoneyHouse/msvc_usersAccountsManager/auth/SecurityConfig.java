@@ -37,10 +37,15 @@ public class SecurityConfig {
                                         "auth/logout",
                                         "manager/hello",
                                         "manager/register",
+                                        "manager/validate/{accountId}/{userId}",
+                                        "swagger-ui/**",
+                                        "v3/api-docs",
+                                        "actuator/**",
 
                                         "http://localhost:8082/users").permitAll()
 
                                 .anyRequest().authenticated()
+
                 )
 
                 .csrf().disable()

@@ -1,0 +1,32 @@
+[
+  {
+    "date": "2024-09-06T12:34:56",
+    "originAccountId": 1,
+    "type": "RECHARGE_FROM_CARD",
+    "productOriginType": "CARD",
+    "productOriginId": 67890,
+    "destinationAccountId": 12345,
+    "amount": 500.00,
+    "description": "Recarga desde tarjeta de débito"
+  },
+  {
+    "date": "2024-09-06T12:34:56",
+    "originAccountId": 1,
+    "type": "RECHARGE_FROM_CARD",
+    "productOriginType": "CARD",
+    "productOriginId": 1,
+    "destinationAccountId": 12345,
+    "amount": 750.00,
+    "description": "Recarga desde tarjeta de crédito"
+  },
+  {
+    "date": "2024-09-06T12:34:56",
+    "originAccountId": 1,
+    "type": "TRANSFER_BETWEEN_ACCOUNTS",
+    "productOriginType": "ACCOUNT",
+    "productOriginId": 12345,
+    "destinationAccountId": 2,
+    "amount": 200.00,
+    "description": "Transferencia entre cuentas"
+  }
+]

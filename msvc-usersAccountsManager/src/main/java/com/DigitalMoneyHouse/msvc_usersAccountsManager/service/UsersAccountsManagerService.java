@@ -136,6 +136,12 @@ public class UsersAccountsManagerService implements  IUsersAccountsManagerServic
         }
     }
 
+    @Override
+    public boolean isAuthorizedForAccount(Long accountId, Long userId) {
+        boolean isUserWhitAccount = usersAccountsManagerRepository.isAuthorizedForAccount(accountId, userId);
+        System.out.println("La cuenta < "+accountId+" > está asociada con el usuario < "+userId+" >" );
+        return isUserWhitAccount;
+    }
 
 }
 

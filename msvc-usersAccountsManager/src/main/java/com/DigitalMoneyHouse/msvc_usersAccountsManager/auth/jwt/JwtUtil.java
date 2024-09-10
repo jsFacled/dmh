@@ -36,8 +36,9 @@ public class JwtUtil {
         long currentTimeMillis = System.currentTimeMillis();
         return Jwts.builder()
                 .setSubject(email)
+                //.claim("userId", userId) // Agrega el ID del usuario como una reclamación
                 .setIssuedAt(new Date(currentTimeMillis))
-                .setExpiration(new Date(currentTimeMillis + 180000)) //3 minutos
+                .setExpiration(new Date(currentTimeMillis + 600000)) //10 minutos
                 //.setExpiration(new Date(currentTimeMillis + 1000 * 60 * 60)) // 1 hora de expiración
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 .compact();
@@ -55,6 +56,9 @@ public class JwtUtil {
     public String extractUsername(String token) {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getSubject();
     }
+    public String extractUserId(String token) {
+        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().get("userId", String.class);
+    }
 
     public Date extractExpiration(String token) {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getExpiration();
@@ -67,6 +71,45 @@ public class JwtUtil {
         return (username != null && !isTokenExpired(token) && !tokenService.isTokenInvalidated(token));
     }
 
+    /*
+    public boolean validateToken(String token) {
+        // Extraer el nombre de usuario del token
+        final String username = extractUsername(token);
+        System.out.println("Extracted Username: " + username);
+
+        boolean isExpired = false;
+        boolean isInvalidated = false;
+
+        try {
+            // Verificar si el token ha expirado
+            isExpired = isTokenExpired(token);
+            System.out.println("Token Expiration Status: " + isExpired);
+
+            // Verificar si el token ha sido invalidado
+            isInvalidated = tokenService.isTokenInvalidated(token);
+            System.out.println("Token Invalidated Status: " + isInvalidated);
+
+        } catch (Exception e) {
+            // Imprimir el error si ocurre una excepción
+            System.out.println("Error while validating token: " + token);
+            e.printStackTrace(); // Imprimir la traza completa de la excepción
+        }
+
+        // Imprimir el resultado final de la validación del token
+        boolean isValid = (username != null && !isExpired && !isInvalidated);
+        if (isValid) {
+            System.out.println("Token is valid.");
+        } else {
+            System.out.println("Token is invalid. Username: " + username +
+                    ", Expired: " + isExpired +
+                    ", Invalidated: " + isInvalidated);
+        }
+
+        return isValid;
+    }
+
+
+ */
     private boolean isTokenExpired(String token) {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getExpiration().before(new Date());
     }
@@ -84,3 +127,4 @@ public class JwtUtil {
     }
 
 }
+
