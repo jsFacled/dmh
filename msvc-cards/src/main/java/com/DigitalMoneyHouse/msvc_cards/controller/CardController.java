@@ -26,6 +26,11 @@ private final CardService cardService;
         this.cardService = cardService;
     }
 
+    @GetMapping("/hello")
+    public String sayHello() {
+        return "Hello desde ms-cards";
+    }
+
     @GetMapping
     public ResponseEntity<List<CardRequestDTO>> getAllCards() {
         List<CardRequestDTO> cards = cardService.getAllCards();

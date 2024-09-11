@@ -1,0 +1,6 @@
+com\DigitalMoneyHouse\msvc_gateway\filters\JwtForwardingFilter.class
+com\DigitalMoneyHouse\msvc_gateway\config\AppConfig.class
+com\DigitalMoneyHouse\msvc_gateway\filters\JwtForwardingFilterFactory.class
+com\DigitalMoneyHouse\msvc_gateway\config\SwaggerConfig.class
+com\DigitalMoneyHouse\msvc_gateway\filters\JwtForwardingFilterFactory$Config.class
+com\DigitalMoneyHouse\msvc_gateway\MsvcGatewayApplication.class
