@@ -1,6 +1,3 @@
-server:
-  port: 8084
-
 spring:
   application:
     name: msvc-transactions
@@ -17,34 +14,3 @@ eureka:
     instance:
       prefer-ip-address: true
       instance-id: ${spring.application.name}:${random.value}
-
-
-# Desabilito el config server para ir probando
-
-  cloud:
-    config:
-      enabled: false
-
-  datasource:
-    url: jdbc:mysql://localhost:3306/dmh_bd1
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect
-
-# swagger-ui custom path
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-
-# /api-docs endpoint custom path
-  api-docs:
-    path: /api-docs
-
