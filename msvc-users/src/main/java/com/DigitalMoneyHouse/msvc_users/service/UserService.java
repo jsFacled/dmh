@@ -1,21 +1,25 @@
 package com.DigitalMoneyHouse.msvc_users.service;
 
-import com.DigitalMoneyHouse.msvc_users.dto.UserDTO;
-import com.DigitalMoneyHouse.msvc_users.dto.UserRegisteredResponseDTO;
-import com.DigitalMoneyHouse.msvc_users.dto.UserResponseDTO;
+import com.DigitalMoneyHouse.msvc_users.controller.UserController;
+import com.DigitalMoneyHouse.msvc_users.dto.*;
 import com.DigitalMoneyHouse.msvc_users.entity.User;
+import com.DigitalMoneyHouse.msvc_users.exceptions.UserAlreadyExistsException;
+import com.DigitalMoneyHouse.msvc_users.exceptions.UserNotFoundException;
 import com.DigitalMoneyHouse.msvc_users.repository.IUserRepository;
-import com.DigitalMoneyHouse.msvc_users.dto.UserMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class UserService {
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final IUserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
@@ -27,6 +31,14 @@ public class UserService {
     }
 
     public UserRegisteredResponseDTO createUser(UserDTO userDTO) {
+        // Verificar si el usuario ya existe
+        Optional<User> existingUser = userRepository.findByEmail(userDTO.getEmail());
+        if (existingUser.isPresent()) {
+            logger.error("Error al crear el usuario con el email " + userDTO.getEmail() + ": ya está registrado.");
+            throw new UserAlreadyExistsException("El usuario con el email " + userDTO.getEmail() + " ya está registrado.");
+        }
+
+        // Crear y guardar el nuevo usuario
         User user = new User();
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
@@ -41,19 +53,22 @@ public class UserService {
         return new UserRegisteredResponseDTO(savedUser.getId(), "ok");
     }
 
+
     public UserResponseDTO getUserById(Long id) {
         Optional<User> user = userRepository.findById(id);
         return user.map(userMapper::toUserResponseDTO).orElse(null);
     }
 
-    public UserResponseDTO getUserByEmail(String email) {
+    public UserEmailYPasswordDTO getUserByEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
+
         if (user.isPresent()) {
             System.out.println(" * * * * Usuario encontrado: " + user.get());
+            return userMapper.toUserEmailYPasswordDTO(user.get());
         } else {
             System.out.println(" / * * * * * Usuario no encontrado.");
+            throw new UserNotFoundException("Usuario con email " + email + " no encontrado.");
         }
-        return user.map(userMapper::toUserResponseDTO).orElse(null);
     }
 
     public UserDTO updateUser(Long id, UserDTO userDTO) {
@@ -68,6 +83,36 @@ public class UserService {
             user.setPhone(userDTO.getPhone());
             user.setUpdatedAt(LocalDateTime.now());
 
+            User updatedUser = userRepository.save(user);
+            return userMapper.toUserDTO(updatedUser);
+        }
+        return null;
+    }
+
+    public UserDTO patchUser(Long id, Map<String, Object> updates) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            updates.forEach((key, value) -> {
+                switch (key) {
+                    case "firstName":
+                        user.setFirstName((String) value);
+                        break;
+                    case "lastName":
+                        user.setLastName((String) value);
+                        break;
+                    case "dni":
+                        user.setDni((String) value);
+                        break;
+                    case "email":
+                        user.setEmail((String) value);
+                        break;
+                    case "phone":
+                        user.setPhone((String) value);
+                        break;
+                }
+            });
+            user.setUpdatedAt(LocalDateTime.now());
             User updatedUser = userRepository.save(user);
             return userMapper.toUserDTO(updatedUser);
         }
@@ -89,4 +134,39 @@ public class UserService {
         passwordEncoder.encode(password);
         return password;
     }
+
+    public Long getUserIdByEmail(String email) {
+        return userRepository.getUserIdByUserEmail(email).orElse(null);
+    }
+
+
+    public boolean validarSinEncriptar(LoginRequestDTO loginRequestDTO) {
+        System.out.println("* * Desde ms-users * * en UserService INICIO en validarSinEncriptar()");
+
+        // Trae el usuario de la base de datos (id, email, contraseña)
+        User userEntity = userRepository.findByEmail(loginRequestDTO.getEmail())
+                .orElseThrow(() -> new UserNotFoundException("Usuario con email " + loginRequestDTO.getEmail() + " no encontrado"));
+
+        System.out.println("* * UserService * *  validarSinEncriptar el userprueba que devuelve base de datos es : " + userEntity);
+
+        // Matchea la contraseña del DTO con la de la base de datos (inseguro)
+        return loginRequestDTO.getPassword().equals(userEntity.getPassword());
+    }
+
+
+/*
+    //En vez de devolver un ResponseEntity directamente se responde con boolean.
+    public boolean validarSinEncriptar(LoginRequestDTO loginRequestDTO) {
+        System.out.println("* * Desde ms-users * * en UserService INICIO en validarSinEncriptar()");
+
+        // Trae el usuario de la base de datos (id, email, contraseña)
+        User userEntity = userRepository.findByEmail(loginRequestDTO.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        System.out.println("* * UserService * *  validarSinEncriptar el userprueba que devuelve base de datos es : " + userEntity);
+
+        // Matchea la contraseña del DTO con la de la base de datos (inseguro)
+        return loginRequestDTO.getPassword().equals(userEntity.getPassword());
+    }
+*/
 }

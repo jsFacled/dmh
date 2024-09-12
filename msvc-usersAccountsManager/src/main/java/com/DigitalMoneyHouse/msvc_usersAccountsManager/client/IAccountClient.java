@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "msvc-accounts", url = "http://localhost:8083/account")
+@FeignClient(name = "msvc-accounts", url = "http://localhost:8083/accounts")
 public interface IAccountClient {
 
     @PostMapping("/create/{userId}")
