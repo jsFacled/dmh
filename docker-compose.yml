@@ -96,9 +96,9 @@ services:
     networks:
       - mynetwork
     environment:
-      - MYSQL_URL=${MYSQL_URL}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      MYSQL_URL: ${MYSQL_URL}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 
 networks:
   mynetwork:
