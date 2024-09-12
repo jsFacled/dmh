@@ -37,4 +37,15 @@ public class UserMapper {
         userResponseDTO.setPhone(user.getPhone());
         return userResponseDTO;
     }
+    public UserEmailYPasswordDTO toUserEmailYPasswordDTO(User user) {
+        if (user == null) {
+            return null;
+        }
+        UserEmailYPasswordDTO userEmailYPasswordDTO = new UserEmailYPasswordDTO();
+
+        userEmailYPasswordDTO.setEmail(user.getEmail());
+        userEmailYPasswordDTO.setPassword(user.getPassword());
+        return userEmailYPasswordDTO;
+    }
+
 }
