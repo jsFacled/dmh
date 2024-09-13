@@ -13,6 +13,9 @@ spring:
         git:
           uri: https://github.com/jsFacled/dmh-configServer-repo.git
 
+logging:
+  level:
+    org.springframework.cloud.config: DEBUG
 
 eureka:
   client:
