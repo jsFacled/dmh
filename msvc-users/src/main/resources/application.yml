@@ -13,3 +13,7 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 
+logging:
+  level:
+    root: INFO
+    com.tu.paquete: DEBUG  # Reemplaza esto con el paquete base de tu aplicación

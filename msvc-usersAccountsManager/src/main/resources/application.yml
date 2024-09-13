@@ -5,13 +5,20 @@ spring:
   application:
     name: msvc-usersAccountsManager
   config:
-    import: configserver:http://localhost:8888/msvc-usersAccountsManager-local.yml
-  #profiles:
-    #active: "local"
-
+    import: optional:configserver:http://localhost:8888
+  profiles:
+    active: "local"
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        serviceId: msvc-configServer
 
 eureka:
   client:
-    serviceUrl:
-      defaultZone: http://localhost:8761
+    register-with-eureka: true
+    fetch-registry: true
 
+
+      #serviceUrl:
+      #defaultZone: http://localhost:8761/eureka/
