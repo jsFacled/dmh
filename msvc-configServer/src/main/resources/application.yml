@@ -7,6 +7,9 @@ spring:
   cloud:
     config:
       server:
+        native:
+          searchLocations: classpath:/config
+          
         bootstrap: false
        # native:
         #  search-locations: classpath:/config # Indica que use archivos locales en el directorio /config dentro del classpath
