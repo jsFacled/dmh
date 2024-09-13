@@ -1,12 +1,10 @@
 spring:
-  application:
-    name: msvc-cards
-  config:
-    import: configserver:http://localhost:8888
-
   profiles:
     active: local
-
+  cloud:
+    config:
+      uri: http://localhost:8888
+      name: msvc-cards
 
 
 eureka:
