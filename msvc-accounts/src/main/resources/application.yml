@@ -5,4 +5,7 @@ spring:
     name: msvc-accounts
 
   config:
-    import: optional:configserver:http://localhost:8888/msvc-accounts-local.yml
+    import: optional:configserver:http://localhost:8888
+
+  profiles:
+    active: local

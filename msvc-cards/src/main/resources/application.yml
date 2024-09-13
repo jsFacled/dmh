@@ -2,4 +2,7 @@ spring:
   application:
     name: msvc-cards
   config:
-    import: optional:configserver:http://localhost:8888/msvc-cards-local.yml
+    import: optional:configserver:http://localhost:8888
+
+  profiles:
+    active: local
