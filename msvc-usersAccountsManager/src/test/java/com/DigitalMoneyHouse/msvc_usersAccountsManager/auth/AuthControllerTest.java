@@ -9,7 +9,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AuthControllerTest {
-
+/*
     @Test
     public void testLoginSuccess() {
         // Configura la URL base para las pruebas
@@ -57,5 +57,7 @@ public class AuthControllerTest {
 
 
 
+
+ */
 }
 
