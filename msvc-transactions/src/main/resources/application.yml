@@ -3,6 +3,6 @@ spring:
     name: msvc-transactions
 
   config:
-    import: optional:configserver:http://localhost:8888,optional:file:./msvc-transactions-local.yml
+    import: optional:configserver:http://localhost:8888/msvc-transactions-local.yml
 
  
