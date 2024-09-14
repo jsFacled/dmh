@@ -1,19 +1,16 @@
-server:
-  port: 8083
 spring:
   application:
     name: msvc-accounts
 
   config:
-    import: optional:configserver:http://localhost:8888
-
-  profiles:
-    active: local
-
-
+    import: optional:configserver:http://msvc-configserver:8888
 
 eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-
+    client:
+      register-with-eureka: true
+      fetch-registry: true
+      service-url:
+        defaultZone: http://msvc-eureka:8761/eureka/
+    instance:
+      prefer-ip-address: true
+      instance-id: ${spring.application.name}:${random.value}
