@@ -7,14 +7,28 @@ spring:
   cloud:
     config:
       server:
-        bootstrap: false
-       # native:
-        #  search-locations: classpath:/config # Indica que use archivos locales en el directorio /config dentro del classpath
         git:
           uri: https://github.com/jsFacled/dmh-configServer-repo.git
+          clone-on-start: true # Para clonar el repositorio al inicio
+          timeout: 3000        # Establece un tiempo máximo de espera para las conexiones a Git
+        retry:
+          initial-interval: 2000  # Intervalo inicial entre reintentos
+          max-attempts: 6         # Número máximo de intentos de reintento
+          multiplier: 1.5         # Aumento de los intervalos de reintento
+        bootstrap: false
+    loadbalancer:
+      retry:
+        enabled: true
+
+logging:
+  level:
+    org.springframework.cloud.config: DEBUG
+    org.springframework.retry: DEBUG
 
 eureka:
   client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/ # Cambia según la URL de tu servidor Eureka
     register-with-eureka: true
     fetch-registry: true
     service-url:
