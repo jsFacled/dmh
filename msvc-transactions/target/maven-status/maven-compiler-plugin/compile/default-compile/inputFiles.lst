@@ -1,0 +1,11 @@
+C:\Users\Usuario\Desktop\DMH\dmh\msvc-transactions\src\main\java\com\DigitalMoneyHouse\msvc_transactions\config\SwaggerConfig.java
+C:\Users\Usuario\Desktop\DMH\dmh\msvc-transactions\src\main\java\com\DigitalMoneyHouse\msvc_transactions\controller\TransactionController.java
+C:\Users\Usuario\Desktop\DMH\dmh\msvc-transactions\src\main\java\com\DigitalMoneyHouse\msvc_transactions\exceptions\GlobalExceptionHandler.java
+C:\Users\Usuario\Desktop\DMH\dmh\msvc-transactions\src\main\java\com\DigitalMoneyHouse\msvc_transactions\exceptions\TransactionNotFoundException.java
+C:\Users\Usuario\Desktop\DMH\dmh\msvc-transactions\src\main\java\com\DigitalMoneyHouse\msvc_transactions\models\dto\TransactionDTO.java
+C:\Users\Usuario\Desktop\DMH\dmh\msvc-transactions\src\main\java\com\DigitalMoneyHouse\msvc_transactions\models\entity\Transaction.java
+C:\Users\Usuario\Desktop\DMH\dmh\msvc-transactions\src\main\java\com\DigitalMoneyHouse\msvc_transactions\models\enums\ProductOriginType.java
+C:\Users\Usuario\Desktop\DMH\dmh\msvc-transactions\src\main\java\com\DigitalMoneyHouse\msvc_transactions\models\enums\TransactionType.java
+C:\Users\Usuario\Desktop\DMH\dmh\msvc-transactions\src\main\java\com\DigitalMoneyHouse\msvc_transactions\MsvcTransactionsApplication.java
+C:\Users\Usuario\Desktop\DMH\dmh\msvc-transactions\src\main\java\com\DigitalMoneyHouse\msvc_transactions\repository\ITransactionRepository.java
+C:\Users\Usuario\Desktop\DMH\dmh\msvc-transactions\src\main\java\com\DigitalMoneyHouse\msvc_transactions\service\TransactionService.java

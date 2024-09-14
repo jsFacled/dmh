@@ -5,15 +5,14 @@ spring:
   application:
     name: msvc-cards
   config:
-    import: optional:configserver:http://localhost:8888
-  cloud:
-    config:
-      uri: http://localhost:8888  #where the config-service is running
-      fail-fast: true             #the service will not run if it can't reach the config-service
-      import-check:
-        enabled: false              #anula la importación de configuración
+    import: optional:configserver:http://msvc-configserver:8888
 
 eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+    client:
+      register-with-eureka: true
+      fetch-registry: true
+      service-url:
+        defaultZone: http://msvc-eureka:8761/eureka/
+    instance:
+      prefer-ip-address: true
+      instance-id: ${spring.application.name}:${random.value}

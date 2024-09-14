@@ -31,15 +31,8 @@ eureka:
       defaultZone: http://localhost:8761/eureka/ # Cambia según la URL de tu servidor Eureka
     register-with-eureka: true
     fetch-registry: true
+    service-url:
+      defaultZone: http://msvc-eureka:8761/eureka/
   instance:
-    lease-renewal-interval-in-seconds: 10  # Frecuencia para enviar renovaciones a Eureka
-    lease-expiration-duration-in-seconds: 30 # Tiempo para que el servicio sea marcado como no disponible si no hay renovaciones
-
-management:
-  health:
-    config:
-      enabled: true
-  endpoints:
-    web:
-      exposure:
-        include: health,info
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${random.value}

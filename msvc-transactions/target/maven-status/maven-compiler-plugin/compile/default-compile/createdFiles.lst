@@ -1,0 +1,11 @@
+com\DigitalMoneyHouse\msvc_transactions\exceptions\TransactionNotFoundException.class
+com\DigitalMoneyHouse\msvc_transactions\models\dto\TransactionDTO.class
+com\DigitalMoneyHouse\msvc_transactions\controller\TransactionController.class
+com\DigitalMoneyHouse\msvc_transactions\repository\ITransactionRepository.class
+com\DigitalMoneyHouse\msvc_transactions\models\entity\Transaction.class
+com\DigitalMoneyHouse\msvc_transactions\models\enums\ProductOriginType.class
+com\DigitalMoneyHouse\msvc_transactions\config\SwaggerConfig.class
+com\DigitalMoneyHouse\msvc_transactions\service\TransactionService.class
+com\DigitalMoneyHouse\msvc_transactions\exceptions\GlobalExceptionHandler.class
+com\DigitalMoneyHouse\msvc_transactions\MsvcTransactionsApplication.class
+com\DigitalMoneyHouse\msvc_transactions\models\enums\TransactionType.class

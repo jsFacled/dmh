@@ -20,6 +20,12 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
+
+    @GetMapping("/hello")
+    public String sayHello() {
+        return "Hello desde ms-transactions";
+    }
+
     @GetMapping("/last-five-destinations/{accountId}")
     public ResponseEntity<?> getLastFiveDistinctDestinationsByAccountId(
             @PathVariable("accountId") Long accountId) {

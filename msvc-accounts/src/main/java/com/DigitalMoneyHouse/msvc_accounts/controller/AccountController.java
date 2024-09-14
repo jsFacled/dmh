@@ -26,6 +26,10 @@ public class AccountController {
 
     private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
+    @GetMapping("/hello")
+    public String sayHello() {
+        return "Hello desde ms-accounts";
+    }
 
     @GetMapping("/{id}/balance")
     public ResponseEntity<BigDecimal> getAccountBalance(@PathVariable("id") Long accountId) {
