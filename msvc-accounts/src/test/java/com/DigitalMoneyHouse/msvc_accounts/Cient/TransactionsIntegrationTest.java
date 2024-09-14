@@ -1,11 +1,27 @@
 package com.DigitalMoneyHouse.msvc_accounts.Cient;
 
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.net.http.HttpHeaders;
 
+import static junit.framework.TestCase.assertEquals;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.DigitalMoneyHouse.msvc_accounts.client.transactions.TransactionsClientController;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.web.servlet.MockMvc;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class TransactionsIntegrationTest {
@@ -17,7 +33,7 @@ public class TransactionsIntegrationTest {
     public void testGetTransactionById_success() {
         // Dado: una transacción válida con token válido
         HttpHeaders headers = new Http;
-        headers.set("Authorization", "Bearer validToken");
+        headers.getClass("Authorization", "Bearer validToken");
 
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
