@@ -8,5 +8,9 @@ public class LoginRequestDTO {
     private String email;
     private String password;
 
+    public LoginRequestDTO(String email, String password) {
+
+    }
+
     // Getters and setters
 }
