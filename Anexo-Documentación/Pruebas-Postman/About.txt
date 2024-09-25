@@ -1,0 +1,1 @@
+En esta carpeta he importado cada collection de postman porque cambia el workspace automaticamente a privado por temas de passwords, etc en las consultas.
