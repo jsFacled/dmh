@@ -1,0 +1,347 @@
+{
+	"info": {
+		"_postman_id": "6da8af04-62a0-48fd-887e-25b086440c99",
+		"name": "DMH-GATEWAY",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19068825"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"email\": \"your_username_here\",\r\n    \"password\": \"your_password_here\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8090/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "manager/hello",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "auth/hello",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "your_token_here",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/auth/hello",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"auth",
+						"hello"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "your_token_here",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/auth/logout",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"auth",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "account by id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "your_token_here",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/accounts/18",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"accounts",
+						"18"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "validar jwt",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "your_token_here",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/auth/validate",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"auth",
+						"validate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "transactions debit card to my account",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "your_token_here",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"date\": \"2024-09-06T12:34:56\",\r\n    \"originAccountId\": 1,\r\n    \"type\": \"TRANSFER_BETWEEN_ACCOUNTS\",\r\n    \"productOriginType\": \"ACCOUNT\",\r\n    \"productOriginId\": 1,\r\n    \"destinationAccountId\": 2,\r\n    \"amount\": 200.00,\r\n    \"description\": \"Transferencia entre cuentas\"\r\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8090/accounts/1/transactions",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"accounts",
+						"1",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "account by id activity",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYmJiQGdtYWlsLmNvbSIsImlhdCI6MTcyNTcwNjM4MCwiZXhwIjoxNzI1NzA2OTgwfQ.YWX5tT02kpXFG3UgrtqjKn33Xs9hnJF0bub52cJRSS1mXF7vuUyc2Czd6eukmJfDLWQxB6dGFLH1IRX9hRAckw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/accounts/1/activity",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"accounts",
+						"1",
+						"activity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "modificar alias ",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "your_token_here",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\r\n       \r\n        \"alias\": \"your_alias\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8090/accounts/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"accounts",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user by id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "your_token_here",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8090/users/24",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"users",
+						"24"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patch users by id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "your_token_here",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"firstName\": \"your_firstName\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8090/users/6",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"users",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "validar cuenta con ususario",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

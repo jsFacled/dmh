@@ -1,0 +1,76 @@
+{
+	"info": {
+		"_postman_id": "a903654a-44d0-4a92-acc2-d2edf8a0e5c0",
+		"name": "DMH-PRU-1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19068825"
+	},
+	"item": [
+		{
+			"name": "updateUser",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n   \r\n    \"email\": \"your_username_here\",\r\n    \"password\": \"your_password_here\",\r\n      \"firstName\": \"Mauricio\",\r\n      \"lastName\": \"Brito\",\r\n      \"phone\": \"1178978927\",\r\n      \"dni\": \"90324324\"\r\n      \r\n    }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/users/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUserById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/users/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8083/accounts/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8083/accounts/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"accounts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

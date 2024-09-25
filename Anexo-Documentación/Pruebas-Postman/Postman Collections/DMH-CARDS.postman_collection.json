@@ -1,0 +1,114 @@
+{
+	"info": {
+		"_postman_id": "7ff17a25-b3d2-4e29-a610-70f3dea86c4b",
+		"name": "DMH-CARDS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19068825"
+	},
+	"item": [
+		{
+			"name": "GET all cards",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8085/cards",
+					"host": [
+						"localhost"
+					],
+					"port": "8085",
+					"path": [
+						"cards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET cards por userId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8085/cards/account/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8085",
+					"path": [
+						"cards",
+						"account",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCardById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8085/cards/user/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8085",
+					"path": [
+						"cards",
+						"user",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST createCard",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8085/cards/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8085",
+					"path": [
+						"cards",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST createCard",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"expiration\": \"07/25\",\r\n  \"number\": \"5000987654321098\",\r\n  \"holderName\": \"Michael Wilson\",\r\n  \"cvc\": \"987\",\r\n  \"accountId\": null,\r\n  \"userId\": 105,\r\n  \"cardType\": \"CREDIT\",\r\n  \"brand\": \"VISA\",\r\n  \"creditLimit\": 7500.00\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8085/cards",
+					"host": [
+						"localhost"
+					],
+					"port": "8085",
+					"path": [
+						"cards"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

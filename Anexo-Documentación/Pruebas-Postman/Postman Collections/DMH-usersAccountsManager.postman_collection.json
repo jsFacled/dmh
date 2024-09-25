@@ -1,0 +1,31 @@
+{
+	"info": {
+		"_postman_id": "033d6580-9fb0-43fb-87d5-813186bc5972",
+		"name": "DMH-usersAccountsManager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19068825"
+	},
+	"item": [
+		{
+			"name": "validar usuario y cuenta",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/manager/validate/17/23",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"manager",
+						"validate",
+						"17",
+						"23"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

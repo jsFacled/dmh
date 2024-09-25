@@ -1,0 +1,72 @@
+{
+	"info": {
+		"_postman_id": "247fe9bb-6f06-45bc-8313-4ef92a96f9d0",
+		"name": "DMH-Transactions",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19068825"
+	},
+	"item": [
+		{
+			"name": "get all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8084/transactions",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "get transactions by accountId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8084/transactions/account/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8084",
+					"path": [
+						"transactions",
+						"account",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get top 5 de accountId",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "get transactions byId",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

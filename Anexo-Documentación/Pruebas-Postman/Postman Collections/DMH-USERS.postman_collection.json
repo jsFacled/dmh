@@ -1,0 +1,210 @@
+{
+	"info": {
+		"_postman_id": "6d319585-8890-437b-9d78-05694d863754",
+		"name": "DMH-USERS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19068825"
+	},
+	"item": [
+		{
+			"name": "patch users by id",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"firstName\": \"Juanchoooooooo\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8082/users/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"users",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8082/users/all",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"users",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "validar usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"email\": \"your_username_here\",\r\n    \"password\": \"your_password_here\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8082/users/validate",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"users",
+						"validate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUserByEmail",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\"email\": \"ju@gmail.com\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/users/email/ju@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"users",
+						"email",
+						"ju@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllUsers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8082/users/all",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"users",
+						"all"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "getAllUsers",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/users/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"users",
+								"all"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 31 Aug 2024 10:52:29 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 3,\n        \"firstName\": \"Juanchoooooooo\",\n        \"lastName\": \"Jota\",\n        \"dni\": \"12345678\",\n        \"email\": \"ju@gmail.com\",\n        \"phone\": \"11111111111\"\n    },\n    {\n        \"id\": 4,\n        \"firstName\": \"cholo\",\n        \"lastName\": \"cholote\",\n        \"dni\": \"2765423\",\n        \"email\": \"cho@gmail.com\",\n        \"phone\": \"2222222222\"\n    },\n    {\n        \"id\": 6,\n        \"firstName\": \"Bbbbbbbbb\",\n        \"lastName\": \"BBBBBBBBBB\",\n        \"dni\": \"903888888824324\",\n        \"email\": \"bbbb@gmail.com\",\n        \"phone\": \"8888888888\"\n    },\n    {\n        \"id\": 7,\n        \"firstName\": \"Register uno\",\n        \"lastName\": \"Primero\",\n        \"dni\": \"11111111\",\n        \"email\": \"register1@gmail.com\",\n        \"phone\": \"1111111111\"\n    },\n    {\n        \"id\": 8,\n        \"firstName\": \"Register dos\",\n        \"lastName\": \"Primero\",\n        \"dni\": \"22222222\",\n        \"email\": \"register2@gmail.com\",\n        \"phone\": \"2222222222\"\n    },\n    {\n        \"id\": 9,\n        \"firstName\": \"Register tres\",\n        \"lastName\": \"Tercero\",\n        \"dni\": \"33333333\",\n        \"email\": \"register3@gmail.com\",\n        \"phone\": \"33333333333\"\n    },\n    {\n        \"id\": 10,\n        \"firstName\": \"Register cuatro\",\n        \"lastName\": \"Cuarto\",\n        \"dni\": \"44444444\",\n        \"email\": \"register4@gmail.com\",\n        \"phone\": \"444444444\"\n    },\n    {\n        \"id\": 11,\n        \"firstName\": \"Register cinco\",\n        \"lastName\": \"Cinco\",\n        \"dni\": \"55555555\",\n        \"email\": \"register5@gmail.com\",\n        \"phone\": \"555555555\"\n    },\n    {\n        \"id\": 12,\n        \"firstName\": \"Register cinco\",\n        \"lastName\": \"Cinco\",\n        \"dni\": \"55555555\",\n        \"email\": \"register5@gmail.com\",\n        \"phone\": \"555555555\"\n    },\n    {\n        \"id\": 13,\n        \"firstName\": \"Register cinco\",\n        \"lastName\": \"Cinco\",\n        \"dni\": \"55555555\",\n        \"email\": \"register5@gmail.com\",\n        \"phone\": \"555555555\"\n    },\n    {\n        \"id\": 14,\n        \"firstName\": \"Register cinco\",\n        \"lastName\": \"Cinco\",\n        \"dni\": \"55555555\",\n        \"email\": \"register5@gmail.com\",\n        \"phone\": \"555555555\"\n    },\n    {\n        \"id\": 15,\n        \"firstName\": \"Register cinco\",\n        \"lastName\": \"Cinco\",\n        \"dni\": \"55555555\",\n        \"email\": \"register5@gmail.com\",\n        \"phone\": \"555555555\"\n    },\n    {\n        \"id\": 16,\n        \"firstName\": \"Seis\",\n        \"lastName\": \"Seis appellidos\",\n        \"dni\": \"66666666\",\n        \"email\": \"register6@gmail.com\",\n        \"phone\": \"6666666\"\n    },\n    {\n        \"id\": 17,\n        \"firstName\": \"Seis\",\n        \"lastName\": \"Seis appellidos\",\n        \"dni\": \"66666666\",\n        \"email\": \"register6@gmail.com\",\n        \"phone\": \"6666666\"\n    },\n    {\n        \"id\": 18,\n        \"firstName\": \"Seis\",\n        \"lastName\": \"Seis appellidos\",\n        \"dni\": \"66666666\",\n        \"email\": \"register6@gmail.com\",\n        \"phone\": \"6666666\"\n    },\n    {\n        \"id\": 19,\n        \"firstName\": \"Seis\",\n        \"lastName\": \"Seis appellidos\",\n        \"dni\": \"66666666\",\n        \"email\": \"register6@gmail.com\",\n        \"phone\": \"6666666\"\n    },\n    {\n        \"id\": 20,\n        \"firstName\": \"Seis\",\n        \"lastName\": \"Seis appellidos\",\n        \"dni\": \"66666666\",\n        \"email\": \"register6@gmail.com\",\n        \"phone\": \"6666666\"\n    },\n    {\n        \"id\": 21,\n        \"firstName\": \"Veintiuno\",\n        \"lastName\": \"Veintiun appellidos\",\n        \"dni\": \"21212121\",\n        \"email\": \"register21@gmail.com\",\n        \"phone\": \"2121212121\"\n    },\n    {\n        \"id\": 22,\n        \"firstName\": \"Veinti2\",\n        \"lastName\": \"Veinti2 appellidos\",\n        \"dni\": \"2222222222222\",\n        \"email\": \"register22@gmail.com\",\n        \"phone\": \"222222\"\n    },\n    {\n        \"id\": 23,\n        \"firstName\": \"Veinti2\",\n        \"lastName\": \"Veinti2 appellidos\",\n        \"dni\": \"2222222222222\",\n        \"email\": \"register22@gmail.com\",\n        \"phone\": \"222222\"\n    },\n    {\n        \"id\": 24,\n        \"firstName\": \"treintaytres\",\n        \"lastName\": \"treintaytrestreintaytres\",\n        \"dni\": \"333333333333\",\n        \"email\": \"33@gmail.com\",\n        \"phone\": \"333333333\"\n    },\n    {\n        \"id\": 25,\n        \"firstName\": \"ma06\",\n        \"lastName\": \"ma06ma\",\n        \"dni\": \"0606060606\",\n        \"email\": \"ma06@gmail.com\",\n        \"phone\": \"0606060606\"\n    },\n    {\n        \"id\": 26,\n        \"firstName\": \"ma07\",\n        \"lastName\": \"ma07ma\",\n        \"dni\": \"07777777777\",\n        \"email\": \"ma07@gmail.com\",\n        \"phone\": \"0777777\"\n    },\n    {\n        \"id\": 27,\n        \"firstName\": \"ma07\",\n        \"lastName\": \"ma07ma\",\n        \"dni\": \"07777777777\",\n        \"email\": \"ma07@gmail.com\",\n        \"phone\": \"0777777\"\n    },\n    {\n        \"id\": 28,\n        \"firstName\": null,\n        \"lastName\": null,\n        \"dni\": null,\n        \"email\": \"ma08@gmail.com\",\n        \"phone\": null\n    },\n    {\n        \"id\": 29,\n        \"firstName\": null,\n        \"lastName\": null,\n        \"dni\": null,\n        \"email\": \"tarde15@gmail.com\",\n        \"phone\": null\n    },\n    {\n        \"id\": 30,\n        \"firstName\": null,\n        \"lastName\": null,\n        \"dni\": null,\n        \"email\": \"tarde16@gmail.com\",\n        \"phone\": null\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "deleteUser",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "users hello",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8082/users/hello",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"users",
+						"hello"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

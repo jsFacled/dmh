@@ -1,0 +1,288 @@
+{
+	"info": {
+		"_postman_id": "b58888b2-a880-4c49-9f3d-057655536a5d",
+		"name": "DMH-REGISTER and LOGIN",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19068825"
+	},
+	"item": [
+		{
+			"name": "Envio de formulario registro usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n    \"email\": \"your_username_here\",\r\n    \"password\": \"your_password_here\",\r\n    \r\n      \"firstName\": \"Ago 31\",\r\n      \"lastName\": \"Treintayuno\",\r\n      \"phone\": \"31313131313131\",\r\n      \"dni\": \"3131313131\"\r\n      \r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/manager/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"manager",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Envio de formulario registro usuario Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"email\": \"your_username_here\",\r\n    \"password\": \"your_password_here\",\r\n      \"firstName\": \"Register 31\",\r\n      \"lastName\": \"R31\",\r\n      \"phone\": \"331133113311\",\r\n      \"dni\": \"333111333\"\r\n      \r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/manager/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"manager",
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Envio de formulario registro usuario Copy",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n      \"email\": \"R31@gmail.com\",\r\n      \"password\": \"123456\",\r\n      \"firstName\": \"Register 31\",\r\n      \"lastName\": \"R31\",\r\n      \"phone\": \"331133113311\",\r\n      \"dni\": \"333111333\"\r\n      \r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8081/manager/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"manager",
+								"register"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 31 Aug 2024 11:24:09 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 12,\n    \"userId\": 32,\n    \"accountId\": 24\n}"
+				}
+			]
+		},
+		{
+			"name": "Manager hello",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/manager/hello",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"manager",
+						"hello"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth/login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "email",
+						"value": "andres@correo.com",
+						"type": "text"
+					},
+					{
+						"key": "password",
+						"value": "123456",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"bbbb@gmail.com\",\r\n    \"password\": \"******\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth/hello",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "your_token_here",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"andres@correo.com\",\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/auth/hello",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auth",
+						"hello"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "your_token_here",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/auth/logout",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auth",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

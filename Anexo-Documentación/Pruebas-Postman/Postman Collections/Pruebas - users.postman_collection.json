@@ -1,0 +1,117 @@
+{
+	"info": {
+		"_postman_id": "0319dfbe-bc4e-4096-a769-6662d246b21d",
+		"name": "Pruebas - users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19068825"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8082/users/get/1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"ro\",\r\n    \"mail\": \"ro@mail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/users/get/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"users",
+						"get",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "users getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8082/users/getAll",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"users",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "manager/getUser/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/manager/getUser/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"manager",
+						"getUser",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8082/users/getAll",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"users",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

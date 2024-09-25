@@ -1,0 +1,47 @@
+{
+	"info": {
+		"_postman_id": "f1cabf44-1a5d-465a-8e4a-7366baff8cda",
+		"name": "DMH-ConfigServer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19068825"
+	},
+	"item": [
+		{
+			"name": "hello",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8888/",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "config server de msvc-uaM",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8888/msvc-usersAccountsManager/default",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"msvc-usersAccountsManager",
+						"default"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

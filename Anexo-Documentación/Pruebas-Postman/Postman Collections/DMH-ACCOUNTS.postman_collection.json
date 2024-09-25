@@ -1,0 +1,171 @@
+{
+	"info": {
+		"_postman_id": "6a1c23a0-fa22-4fe8-b909-18f6e3afaa3e",
+		"name": "DMH-ACCOUNTS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19068825"
+	},
+	"item": [
+		{
+			"name": "get account by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8083/accounts/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"accounts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get balance desde account id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8083/accounts/1/balance",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"accounts",
+						"1",
+						"balance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "crear Card",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "crear Card",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"expiration\": \"05/28\",\r\n  \"number\": \"8787878787878787\",\r\n  \"holderName\": \"Ana Gómez22\",\r\n  \"cvc\": \"777\",\r\n   \r\n  \"cardType\": \"DEBIT\",\r\n  \"brand\": \"VISA\"\r\n \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8083/accounts/1/cards",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"accounts",
+						"1",
+						"cards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get card by card id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8083/accounts/1/cards/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"accounts",
+						"1",
+						"cards",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "get activity by accountId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8083/accounts/1/activity",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"accounts",
+						"1",
+						"activity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get Actividad por transactionID",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "transferencias",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "get ultimos destinatarios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8083/accounts/2/transferences",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"accounts",
+						"2",
+						"transferences"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
