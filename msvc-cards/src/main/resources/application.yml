@@ -1,8 +1,8 @@
 spring:
   profiles:
-    active: "local"
+    active: "dev"
 
-  application:
+  application:git 
     name: msvc-cards
   config:
     import: optional:configserver:http://msvc-configserver:8888

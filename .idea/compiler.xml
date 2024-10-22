@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="msvc-configServer" />
+        <module name="msvc-gateway" />
+        <module name="msvc-eureka" />
+        <module name="msvc-cards" />
+        <module name="msvc-users" />
+        <module name="msvc-usersAccountsManager" />
+        <module name="msvc-transactions" />
+        <module name="msvc-accounts" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="msvc-accounts" options="-parameters" />
+      <module name="msvc-cards" options="-parameters" />
+      <module name="msvc-configServer" options="-parameters" />
+      <module name="msvc-eureka" options="-parameters" />
+      <module name="msvc-gateway" options="-parameters" />
+      <module name="msvc-transactions" options="-parameters" />
+      <module name="msvc-users" options="-parameters" />
+      <module name="msvc-usersAccountsManager" options="-parameters" />
+    </option>
+  </component>
+</project>
