@@ -1,0 +1,100 @@
+version: '3.8'
+
+services:
+  msvc-eureka:
+    build:
+      context: ./msvc-eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - mynetwork
+
+  msvc-configserver:
+    build:
+      context: ./msvc-configserver
+    ports:
+      - "8888:8888"
+    depends_on:
+      - msvc-eureka
+    networks:
+      - mynetwork
+
+  msvc-gateway:
+    build:
+      context: ./msvc-gateway
+    ports:
+      - "8090:8090"
+    depends_on:
+      - msvc-eureka
+      - msvc-configserver
+    networks:
+      - mynetwork
+
+  msvc-accounts:
+    build:
+      context: ./msvc-accounts
+    ports:
+      - "8083:8083"
+    depends_on:
+      - msvc-eureka
+      - msvc-configserver
+    networks:
+      - mynetwork
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev  # Activa el perfil dev
+
+  msvc-users:
+    build:
+      context: ./msvc-users
+    ports:
+      - "8082:8082"
+    depends_on:
+      - msvc-eureka
+      - msvc-configserver
+    networks:
+      - mynetwork
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev  # Activa el perfil dev
+
+  msvc-cards:
+    build:
+      context: ./msvc-cards
+    ports:
+      - "8085:8085"
+    depends_on:
+      - msvc-eureka
+      - msvc-configserver
+    networks:
+      - mynetwork
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev  # Activa el perfil dev
+
+  msvc-transactions:
+    build:
+      context: ./msvc-transactions
+    ports:
+      - "8084:8084"
+    depends_on:
+      - msvc-eureka
+      - msvc-configserver
+    networks:
+      - mynetwork
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev  # Activa el perfil dev
+
+  msvc-usersaccountsmanager:
+    build:
+      context: ./msvc-usersaccountsmanager
+    ports:
+      - "8081:8081"
+    depends_on:
+      - msvc-eureka
+      - msvc-configserver
+    networks:
+      - mynetwork
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev  # Activa el perfil dev
+
+networks:
+  mynetwork:
+    driver: bridge
