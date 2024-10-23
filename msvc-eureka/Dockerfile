@@ -12,4 +12,4 @@ WORKDIR /app
 COPY --from=build /app/target/msvc-eureka-0.0.1-SNAPSHOT.jar /app/msvc-eureka.jar
 
 # Ejecutar el .jar
-ENTRYPOINT ["java", "-jar", "/app/msvc-cards.jar"]
+ENTRYPOINT ["java", "-jar", "/app/msvc-eureka.jar"]

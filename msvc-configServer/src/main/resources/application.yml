@@ -16,5 +16,7 @@ spring:
 
 eureka:
   client:
+    service-url:
+      defaultZone: http://msvc-eureka:8761/eureka/  # Cambia 'localhost' por el nombre del servicio en Docker
     register-with-eureka: true
     fetch-registry: true
