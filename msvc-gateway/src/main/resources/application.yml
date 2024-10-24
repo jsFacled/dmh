@@ -8,3 +8,35 @@ logging:
   level:
     org:
       springframework: ERROR
+
+---
+# Configuración para Docker
+#spring:
+  #profiles: dev
+
+# A partir de springboot 3 cambian las marcas para perfiles
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  application:
+    name: msvc-gateway
+  
+  cloud:
+    config:
+      uri: http://msvc-configserver:8888  # Importar configuración desde el Config Server
+
+server:
+  port: 8090  # Asegura que el puerto esté configurado
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://msvc-eureka:8761/eureka/  # Dirección del Eureka en Docker
+    register-with-eureka: true
+    fetch-registry: true
+
+  instance:
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30

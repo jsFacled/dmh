@@ -3,3 +3,21 @@ spring:
     name: msvc-users
   config:
     import: optional:configserver:http://localhost:8888
+
+---
+# Configuración para Docker
+#spring:
+  #profiles: dev
+
+# A partir de springboot 3 cambian las marcas para perfiles
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://msvc-eureka:8761/eureka/  # Configuración para Docker, usa el nombre del servicio
+    register-with-eureka: true
+    fetch-registry: true

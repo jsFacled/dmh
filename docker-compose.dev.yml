@@ -8,12 +8,8 @@ services:
       - "8761:8761"
     networks:
       - mynetwork
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 10
-      start_period: 40s # Periodo de gracia para que el servicio se inicie antes de realizar el chequeo
+    profiles: [dev]
+    # healthcheck eliminado
 
   msvc-configserver:
     build:
@@ -23,7 +19,10 @@ services:
     networks:
       - mynetwork
     environment:
-      - SPRING_PROFILES_ACTIVE=dev  # Activa el perfil dev
+      - SPRING_PROFILES_ACTIVE=dev
+    
+    profiles: [dev]
+    # healthcheck eliminado
 
   msvc-gateway:
     build:
@@ -33,7 +32,11 @@ services:
     networks:
       - mynetwork
     environment:
-      - SPRING_PROFILES_ACTIVE=dev  # Activa el perfil dev
+      - SPRING_PROFILES_ACTIVE=dev
+    
+   
+    profiles: [dev]
+    # healthcheck eliminado
 
   msvc-accounts:
     build:
@@ -43,7 +46,15 @@ services:
     networks:
       - mynetwork
     environment:
-      - SPRING_PROFILES_ACTIVE=dev  # Activa el perfil dev
+      - SPRING_PROFILES_ACTIVE=dev
+    
+    profiles: [dev]
+    # healthcheck eliminado
+    restart: on-failure
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5  # Intenta reiniciar un máximo de 5 veces
 
   msvc-users:
     build:
@@ -53,7 +64,9 @@ services:
     networks:
       - mynetwork
     environment:
-      - SPRING_PROFILES_ACTIVE=dev  # Activa el perfil dev
+      - SPRING_PROFILES_ACTIVE=dev 
+    profiles: [dev]
+    # healthcheck eliminado
 
   msvc-cards:
     build:
@@ -63,7 +76,9 @@ services:
     networks:
       - mynetwork
     environment:
-      - SPRING_PROFILES_ACTIVE=dev  # Activa el perfil dev
+      - SPRING_PROFILES_ACTIVE=dev
+    profiles: [dev]
+    # healthcheck eliminado
 
   msvc-transactions:
     build:
@@ -73,7 +88,9 @@ services:
     networks:
       - mynetwork
     environment:
-      - SPRING_PROFILES_ACTIVE=dev  # Activa el perfil dev
+      - SPRING_PROFILES_ACTIVE=dev
+    profiles: [dev]
+    # healthcheck eliminado
 
   msvc-usersaccountsmanager:
     build:
@@ -83,7 +100,9 @@ services:
     networks:
       - mynetwork
     environment:
-      - SPRING_PROFILES_ACTIVE=dev  # Activa el perfil dev
+      - SPRING_PROFILES_ACTIVE=dev
+    profiles: [dev]
+    # healthcheck eliminado
 
 networks:
   mynetwork:

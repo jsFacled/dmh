@@ -1,8 +1,57 @@
 server:
   port: 8083
+
 spring:
   application:
     name: msvc-accounts
 
+logging:
+  level:
+    org:
+      springframework: ERROR
+
+# Configuraciones específicas del perfil "local"
+---
+spring:
   config:
+    activate:
+      on-profile: local
+
     import: optional:configserver:http://localhost:8888
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/  # Dirección local de Eureka
+    register-with-eureka: true
+    fetch-registry: true
+
+# Configuraciones específicas del perfil "dev"
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  #config:
+    import: optional:configserver:http://msvc-configServer:8888  # Config Server en Docker    
+
+  #cloud:
+    #config:
+      #uri: http://msvc-configServer:8888  # Importar configuración desde el Config Server
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://msvc-eureka:8761/eureka/  # Dirección del Eureka en Docker
+    register-with-eureka: true
+    fetch-registry: true
+
+  instance:
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.config.client: DEBUG

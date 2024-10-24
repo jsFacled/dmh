@@ -13,10 +13,27 @@ spring:
         git:
           uri: https://github.com/jsFacled/dmh-configServer-repo.git
 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/  # Configuración por defecto para local
+    register-with-eureka: true
+    fetch-registry: true
+
+---
+# Configuración para Docker
+#spring:
+  #profiles: dev
+
+# A partir de springboot 3 cambian las marcas para perfiles
+spring:
+  config:
+    activate:
+      on-profile: dev
 
 eureka:
   client:
     service-url:
-      defaultZone: http://msvc-eureka:8761/eureka/  # Cambia 'localhost' por el nombre del servicio en Docker
+      defaultZone: http://msvc-eureka:8761/eureka/  # Configuración para Docker, usa el nombre del servicio
     register-with-eureka: true
     fetch-registry: true

@@ -19,4 +19,14 @@ eureka:
   client:
     register-with-eureka: false # El servidor Eureka no necesita registrarse a sí mismo
     fetch-registry: false # El servidor Eureka no necesita obtener el registro de otros servicios
+
     
+#Esto habilitará todos los endpoints del actuador, incluyendo el endpoint /actuator/health.
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

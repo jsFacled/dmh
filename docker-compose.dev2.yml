@@ -1,0 +1,57 @@
+#version: '3.8'
+
+services:
+  msvc-eureka:
+    build:
+      context: ./msvc-eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - mynetwork
+    profiles: [dev]
+    # healthcheck eliminado
+
+  msvc-configserver:
+    build:
+      context: ./msvc-configServer
+    ports:
+      - "8888:8888"
+    networks:
+      - mynetwork
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    
+    profiles: [dev]
+    # healthcheck eliminado
+
+  msvc-gateway:
+    build:
+      context: ./msvc-gateway
+    ports:
+      - "8090:8090"
+    networks:
+      - mynetwork
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    
+   
+    profiles: [dev]
+    # healthcheck eliminado
+
+  msvc-accounts:
+    build:
+      context: ./msvc-accounts
+    ports:
+      - "8083:8083"
+    networks:
+      - mynetwork
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    
+    profiles: [dev]
+    # healthcheck eliminado
+
+
+networks:
+  mynetwork: {}
+    #driver: bridge
