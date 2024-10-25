@@ -1,10 +1,22 @@
 spring:
   application:
     name: msvc-cards
+ 
+# Configuraciones específicas del perfil "local"
+---
+spring:
   config:
+    activate:
+      on-profile: local
+
     import: optional:configserver:http://localhost:8888
 
-
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/  # Dirección local de Eureka
+    register-with-eureka: true
+    fetch-registry: true
 ---
 # Configuración para Docker
 #spring:

@@ -1,0 +1,95 @@
+version: '3.8'
+
+services:
+ 
+
+  msvc-accounts:
+    build:
+      context: ./msvc-accounts
+    ports:
+      - "8083:8083"
+    networks:
+      - mynetwork
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    
+    profiles: [dev]
+    # healthcheck eliminado
+    restart: on-failure
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5  # Intenta reiniciar un máximo de 5 veces
+
+  msvc-users:
+    build:
+      context: ./msvc-users
+    ports:
+      - "8082:8082"
+    networks:
+      - mynetwork
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev 
+    profiles: [dev]
+    # healthcheck eliminado
+    restart: on-failure
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5  # Intenta reiniciar un máximo de 5 veces
+
+
+  msvc-cards:
+    build:
+      context: ./msvc-cards
+    ports:
+      - "8085:8085"
+    networks:
+      - mynetwork
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    profiles: [dev]
+    # healthcheck eliminado
+    restart: on-failure
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5  # Intenta reiniciar un máximo de 5 veces
+
+  msvc-transactions:
+    build:
+      context: ./msvc-transactions
+    ports:
+      - "8084:8084"
+    networks:
+      - mynetwork
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    profiles: [dev]
+    # healthcheck eliminado
+    restart: on-failure
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5  # Intenta reiniciar un máximo de 5 veces
+
+  msvc-usersaccountsmanager:
+    build:
+      context: ./msvc-usersaccountsmanager
+    ports:
+      - "8081:8081"
+    networks:
+      - mynetwork
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    profiles: [dev]
+    # healthcheck eliminado
+    restart: on-failure
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5  # Intenta reiniciar un máximo de 5 veces
+
+networks:
+  mynetwork:
+    driver: bridge
