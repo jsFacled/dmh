@@ -89,6 +89,12 @@ services:
         condition: on-failure
         max_attempts: 5  # Intenta reiniciar un máximo de 5 veces
 
+#networks:
+  #mynetwork:
+    #driver: bridge
+
+
 networks:
-  mynetwork:
-    driver: bridge
+  mynetwork: {}
+    #driver: bridge
+

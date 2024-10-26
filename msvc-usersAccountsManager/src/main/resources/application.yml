@@ -6,7 +6,6 @@ spring:
     name: msvc-usersAccountsManager
 
 
-
 # Configuraciones específicas del perfil "local"
 ---
 spring:
