@@ -20,20 +20,32 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
 
+# Configuraciones específicas del perfil "dev"
 ---
-# Configuración para Docker
-#spring:
-  #profiles: dev
-
-# A partir de springboot 3 cambian las marcas para perfiles
 spring:
   config:
     activate:
       on-profile: dev
 
+  #config:
+    import: optional:configserver:http://msvc-configServer:8888  # Config Server en Docker    
+
+  #cloud:
+    #config:
+      #uri: http://msvc-configServer:8888  # Importar configuración desde el Config Server
+
 eureka:
   client:
     service-url:
-      defaultZone: http://msvc-eureka:8761/eureka/  # Configuración para Docker, usa el nombre del servicio
+      defaultZone: http://msvc-eureka:8761/eureka/  # Dirección del Eureka en Docker
     register-with-eureka: true
     fetch-registry: true
+
+  instance:
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.config.client: DEBUG
