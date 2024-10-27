@@ -24,6 +24,7 @@ public class UsersAccountsManagerController {
 
     @GetMapping("/hello")
     public ResponseEntity<?> index()    {
+        logger.info("Endpoint /manager/hello fue llamado");
         System.out.println(" -  -  -  ** -  -  - // -  - Desde ms-uaM manager/hello: dice Hola mundo!! /*  - - - - // ** // **.");
         return ResponseEntity.ok("Hola Mundo!! Soy ms-Manager!!!");
     }
@@ -31,12 +32,17 @@ public class UsersAccountsManagerController {
 
 @PostMapping("/register")
     public ResponseEntity<?> registerUserAccount(@RequestBody UserDTO userDTO) {
+    logger.info("Inicio del registro de usuario: {}", userDTO);
         try {
-            return usersAccountsManagerService.registrarUserAccount(userDTO);
+            ResponseEntity<?> response = usersAccountsManagerService.registrarUserAccount(userDTO);
+            logger.info("Registro de usuario exitoso para el usuario: {}", userDTO.getEmail());
+            return response;
         } catch (ResponseStatusException e) {
+            logger.error("Error en la solicitud: {}", e.getReason(), e);
             // Manejar la excepción y devolver una respuesta adecuada
             return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
         } catch (Exception e) {
+            logger.error("Error inesperado durante el registro de usuario: {}", userDTO.getEmail(), e);
             // Manejar otras excepciones
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error inesperado: " + e.getMessage());
         }

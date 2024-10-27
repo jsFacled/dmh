@@ -12,6 +12,8 @@ import com.DigitalMoneyHouse.msvc_usersAccountsManager.entity.UsersAccountsManag
 import com.DigitalMoneyHouse.msvc_usersAccountsManager.exceptions.UserAlreadyExistsException;
 import com.DigitalMoneyHouse.msvc_usersAccountsManager.repository.UsersAccountsManagerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,8 +21,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+
 @Service
 public class UsersAccountsManagerService implements  IUsersAccountsManagerService{
+    private static final Logger logger = LoggerFactory.getLogger(UsersAccountsManagerService.class);
+
 
     private final UsersAccountsManagerRepository usersAccountsManagerRepository;
     private final IUserClient userClient;
@@ -50,6 +55,7 @@ public class UsersAccountsManagerService implements  IUsersAccountsManagerServic
         // Paso 1: Intentar crear el usuario hasta el número máximo de reintentos
         for (int attempt = 1; attempt <= maxRetries; attempt++) {
             try {
+                logger.info("Intentando crear el usuario, intento {} de {}", attempt, maxRetries);
                 // Intentar crear el usuario utilizando el cliente Feign de usuarios
                 UserRegisteredResponseDTO userRegisteredResponseDTO = userClient.createUser(userDTO);
 
@@ -58,9 +64,12 @@ public class UsersAccountsManagerService implements  IUsersAccountsManagerServic
                     userId = userRegisteredResponseDTO.getUserId(); // Almacenar el ID del usuario
 
                     System.out.println("Se creó el usuario con user_id " + userId);
+                    logger.info("Usuario creado con éxito, ID: {}", userId);
+
                     userCreated = true; // Indicar que el usuario fue creado exitosamente
                     break; // Salir del bucle si el usuario se creó correctamente
                 } else {
+                    logger.warn("Error al crear el usuario, respuesta vacía o sin ID");
                     // Lanzar excepción si no se pudo crear el usuario
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se pudo crear el usuario");
                 }
@@ -95,6 +104,7 @@ public class UsersAccountsManagerService implements  IUsersAccountsManagerServic
         // Paso 2: Si el usuario fue creado exitosamente, proceder con la creación de la cuenta
         if (userCreated) {
             try {
+                logger.info("Intentando crear la cuenta para el usuario ID: {}", userId);
                 // Intentar crear una cuenta utilizando el cliente Feign de cuentas
                 ResponseEntity<AccountRegisteredResponseDTO> responseEntityAccountRegistered = accountClient.createAccount(userId);
 
